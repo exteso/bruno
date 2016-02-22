@@ -1,0 +1,19 @@
+ <div ng-repeat="request in $ctrl.requests" flex="100">
+     <md-card>
+         <md-card-title>
+             <md-card-title-text>
+                 <span class="md-headline">
+                 </span>
+             </md-card-title-text>
+         </md-card-title>
+         <md-card-content layout="row" layout-align="space-between">
+             {{request}}
+         </md-card-content>
+     </md-card>
+ </div>
+
+
+<md-button class="md-fab md-fab-bottom-right" ng-click="$ctrl.openCallForJob()">
+    <md-icon md-svg-src="icons/ic_add_white_48px.svg"></md-icon>
+    <md-tooltip md-direction="top">Call for a job</md-tooltip>
+</md-button>

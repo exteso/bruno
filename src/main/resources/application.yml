@@ -1,0 +1,13 @@
+github:
+  client:
+    clientId: a1c0da2417cb0e181bec
+    clientSecret: 
+    accessTokenUri: https://github.com/login/oauth/access_token
+    userAuthorizationUri: https://github.com/login/oauth/authorize
+    clientAuthenticationScheme: form
+  resource:
+    userInfoUri: https://api.github.com/user
+spring:
+  resources:
+    chain:
+      enabled: true

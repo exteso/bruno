@@ -7,7 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class SpringBootLauncher {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(SpringBootInitializer.class, DataSourceConfiguration.class)
+        new SpringApplicationBuilder(SpringBootInitializer.class, DataSourceConfiguration.class, SecurityConfiguration.class, WebMvcConfiguration.class)
             .headless(System.getProperty("startDBManager") == null)
             .run(args);
 

@@ -7,13 +7,22 @@ import javax.sql.DataSource;
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationVersion;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ch.digitalfondue.npjt.QueryFactory;
+import ch.digitalfondue.npjt.mapper.ZonedDateTimeMapper;
+
 import com.exteso.bruno.configuration.support.Platform;
+import com.exteso.bruno.repository.JobRequestRepository;
+import com.exteso.bruno.repository.UserRepository;
+import com.exteso.bruno.service.ServicesMarker;
 import com.zaxxer.hikari.HikariDataSource;
 
 @EnableTransactionManagement
+@ComponentScan(basePackageClasses=ServicesMarker.class)
 public class DataSourceConfiguration {
 
     @Bean
@@ -46,5 +55,28 @@ public class DataSourceConfiguration {
         migration.setLocations("bruno/db/" + sqlDialect + "/");
         migration.migrate();
         return migration;
+    }
+    
+    @Bean
+    public NamedParameterJdbcTemplate namedParameterJdbcTemplate(DataSource dataSource) {
+        return new NamedParameterJdbcTemplate(dataSource);
+    }
+
+    @Bean
+    public QueryFactory queryFactory(Environment env, Platform platform, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        QueryFactory qf = new QueryFactory(platform.getDialect(env), namedParameterJdbcTemplate);
+        qf.addColumnMapperFactory(new ZonedDateTimeMapper.Factory());
+        qf.addParameterConverters(new ZonedDateTimeMapper.Converter());
+        return qf;
+    }
+    
+    @Bean
+    public UserRepository userRepository(QueryFactory queryFactory) {
+        return queryFactory.from(UserRepository.class);
+    }
+    
+    @Bean
+    public JobRequestRepository jobRequestRepository(QueryFactory queryFactory) {
+        return queryFactory.from(JobRequestRepository.class);
     }
 }

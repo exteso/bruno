@@ -1,6 +1,6 @@
 Support the main flow:
 
- 1. user (customer) create an intervention request
+ 1. user (customer) create an intervention request <- WIP
  2. BRUNO will dispatch a message to all the service providers that match (i.e.: are able to handle) the request
  3. the services providers, when receiving the request will be able to do (in function of the req. type):
     - offer price + intervention date (if request is "urgent")
@@ -10,3 +10,9 @@ Support the main flow:
  6. ... the selected service provider will do the work ...
  7. the service provider will mark the intervention as DONE
  8. the user can give feedback
+ 
+ 
+For social login:
+
+    - https://spring.io/guides/tutorials/spring-boot-oauth2/
+    - https://github.com/spring-guides/tut-spring-boot-oauth2/blob/master/github/src/main/java/com/example/SocialApplication.java

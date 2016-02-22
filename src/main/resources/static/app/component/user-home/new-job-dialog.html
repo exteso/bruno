@@ -1,0 +1,51 @@
+<md-dialog aria-label="Mango (Fruit)"  ng-cloak flex="80">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create a request for a worker</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="newJobDialogController.cancel()">
+          <md-icon md-svg-src="icons/ic_close_white_48px.svg" aria-label="Close dialog"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <form>
+	        <md-input-container class="md-block">
+	            <label>Indirizzo</label>
+	            <input ng-model="request.address" required>
+	        </md-input-container>
+	        <md-input-container class="md-block">
+	            <md-switch ng-model="request.urgent" aria-label="Urgent">
+	                Urgent
+	            </md-switch>
+	        </md-input-container>
+	        <md-input-container class="md-block">
+	            <label>Guasto</label>
+	            <md-select ng-model="request.faultType" required md-on-open="newJobDialogController.loadFaultTypes()">
+	               <md-option ng-value="fault" ng-repeat="fault in newJobDialogController.faultTypes">{{fault}}</md-option>
+	            </md-select>
+	        </md-input-container>
+	        <md-input-container class="md-block">
+	            <label>Descrizione del guasto</label>
+	            <textarea ng-model="request.description" required></textarea>
+	        </md-input-container>
+	        <md-input-container class="md-block">
+                <label>Cosa richiede</label>
+                <md-select ng-model="request.requestType" required md-on-open="newJobDialogController.loadRequestTypes()">
+                    <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{requestType}}</md-option>
+                </md-select>
+            </md-input-container>
+        </form>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <md-button class="md-primary" ng-click="newJobDialogController.create(request)">Crea richiesta</md-button>
+      <span flex></span>
+      <md-button ng-click="newJobDialogController.cancel()">
+        Cancel
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
