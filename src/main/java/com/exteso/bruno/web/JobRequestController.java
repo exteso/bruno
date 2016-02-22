@@ -34,9 +34,14 @@ public class JobRequestController {
         jobRequestService.create(jobRequest, UserIdentifier.from(principal), new Date());
     }
 
-    @RequestMapping(value = "/api/job-request/list")
+    @RequestMapping("/api/job-request/list")
     public List<JobRequest> findAllForUser(Principal principal) {
         return jobRequestService.findForUser(UserIdentifier.from(principal));
+    }
+    
+    @RequestMapping("/api/job-request/list-for-service-provider")
+    public List<JobRequest> findAllForServiceProvider(Principal principal) {
+        return jobRequestService.findForServiceProvider(UserIdentifier.from(principal));
     }
 
     @RequestMapping("/api/job-request/failure-type")

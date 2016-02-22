@@ -1,11 +1,15 @@
 package com.exteso.bruno.service;
 
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
 import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.UserIdentifier;
@@ -31,7 +35,16 @@ public class JobRequestService {
     
     
     public List<JobRequest> findForUser(UserIdentifier user) {
-        long userId =userRepository.getId(user.getProvider(), user.getUsername());
+        long userId = userRepository.getId(user.getProvider(), user.getUsername());
         return jobRequestRepository.findAllForUser(userId);
+    }
+    
+    private Set<FailureType> requestTypeHandled(UserIdentifier from) {
+        return EnumSet.allOf(FailureType.class); //FIXME
+    }
+
+    public List<JobRequest> findForServiceProvider(UserIdentifier from) {
+        Set<String> handled = requestTypeHandled(from).stream().map(Enum::name).collect(Collectors.toSet());//FIXME;
+        return jobRequestRepository.findAllWithType(handled);
     }
 }

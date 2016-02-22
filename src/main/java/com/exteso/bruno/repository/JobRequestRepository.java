@@ -2,14 +2,15 @@ package com.exteso.bruno.repository;
 
 import java.util.Date;
 import java.util.List;
-
-import com.exteso.bruno.model.FailureType;
-import com.exteso.bruno.model.JobRequest;
-import com.exteso.bruno.model.RequestType;
+import java.util.Set;
 
 import ch.digitalfondue.npjt.Bind;
 import ch.digitalfondue.npjt.Query;
 import ch.digitalfondue.npjt.QueryRepository;
+
+import com.exteso.bruno.model.FailureType;
+import com.exteso.bruno.model.JobRequest;
+import com.exteso.bruno.model.RequestType;
 
 @QueryRepository
 public interface JobRequestRepository {
@@ -24,5 +25,9 @@ public interface JobRequestRepository {
     
     @Query("select * from b_job_request where creation_user_fk = :userId order by creation_time DESC")
     List<JobRequest> findAllForUser(@Bind("userId") Long userId);
+
+
+    @Query("select * from b_job_request where fault_type in (:handled) order by creation_time DESC")
+    List<JobRequest> findAllWithType(@Bind("handled") Set<String> handled);
     
 }
