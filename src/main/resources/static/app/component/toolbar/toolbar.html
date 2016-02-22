@@ -1,6 +1,7 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <h2><span>Bruno</span></h2>
+        <h2> <img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar" alt="Chiama Bruno!" />
+            </md-icon><span>Bruno!</span></h2>
         <span flex></span>
         <md-button class="md-raised" aria-label="Login" ng-if="$ctrl.user == undefined" ui-sref="login">Login</md-button>
         <span ng-if="$ctrl.user" ng-bind="$ctrl.user.name"></span>

@@ -3,7 +3,11 @@
          <md-card-title>
              <md-card-title-text>
                  <span class="md-headline">
+                     <md-icon md-svg-src="icons/ic_build_black_48px.svg"></md-icon>
+                     {{request.failureType}} - {{request.description}}
+                     <md-icon ng-show="{{request.urgent}}" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
                  </span>
+                 {{request.address}}
              </md-card-title-text>
          </md-card-title>
          <md-card-content layout="row" layout-align="space-between">
@@ -15,5 +19,5 @@
 
 <md-button class="md-fab md-fab-bottom-right" ng-click="$ctrl.openCallForJob()">
     <md-icon md-svg-src="icons/ic_add_white_48px.svg"></md-icon>
-    <md-tooltip md-direction="top">Call for a job</md-tooltip>
+    <md-tooltip md-direction="top">Call Bruno!</md-tooltip>
 </md-button>

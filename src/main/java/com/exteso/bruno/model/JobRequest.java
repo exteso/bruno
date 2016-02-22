@@ -12,6 +12,7 @@ public class JobRequest {
     private final FailureType failureType;
     private final String description;
     private final RequestType requestType;
+    private final String address;
 
     public JobRequest(@Column("id") Long id,//
             @Column("creation_time") Date creationTime,//
@@ -23,6 +24,7 @@ public class JobRequest {
             @Column("request_type") RequestType requestType) {
         this.id = id;
         this.creationTime = creationTime;
+        this.address = address;
         this.urgent = urgent;
         this.failureType = failureType;
         this.description = description;
@@ -35,6 +37,10 @@ public class JobRequest {
 
     public Date getCreationTime() {
         return creationTime;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public boolean isUrgent() {
