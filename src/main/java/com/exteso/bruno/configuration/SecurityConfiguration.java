@@ -88,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.antMatcher("/**")
             .authorizeRequests()
-                .antMatchers("/", "/login**", "/webjars/**", "/app/**").permitAll()
+                .antMatchers("/", "/login**", "/webjars/**", "/app/**", "/icons/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
             .and().exceptionHandling()
                 .accessDeniedHandler((req, resp, exc) -> {resp.sendError(HttpServletResponse.SC_FORBIDDEN);})
