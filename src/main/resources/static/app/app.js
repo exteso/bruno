@@ -12,6 +12,10 @@
 			url: '/user',
 			template: '<br-user-home></br-user-home>'
 		})
+		.state('service-provider', {
+			url: '/service-provider',
+			template: '<br-service-provider></br-service-provider>'
+		})
 		.state('login', {
 			url: '/login',
 			template: '<br-login></br-login>'

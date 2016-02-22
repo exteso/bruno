@@ -16,6 +16,10 @@
 			
 			findAll: function() {
 				return $http.get('api/job-request/list').then(function(data) {return data.data});
+			},
+			
+			findAllForServiceProvider: function() {
+				return $http.get('api/job-request/list-for-service-provider').then(function(data) {return data.data});
 			}
 		};
 	});
