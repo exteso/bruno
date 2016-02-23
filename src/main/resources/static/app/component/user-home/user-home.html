@@ -1,21 +1,47 @@
- <div ng-repeat="request in $ctrl.requests" flex="100">
-     <md-card>
-         <md-card-title>
-             <md-card-title-text>
-                 <span class="md-headline">
-                     <md-icon md-svg-src="icons/ic_build_black_48px.svg"></md-icon>
-                     {{request.failureType}} - {{request.description}}
-                     <md-icon ng-show="{{request.urgent}}" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
-                 </span>
-                 {{request.address}}
-             </md-card-title-text>
-         </md-card-title>
-         <md-card-content layout="row" layout-align="space-between">
-             {{request}}
-         </md-card-content>
-     </md-card>
- </div>
+<md-content class="md-padding" layout="column" layout-gt-sm="row">
+ <div ng-repeat="request in $ctrl.requests" >
 
+     <div flex>
+         <md-card>
+             <md-card-header>
+                 <md-card-avatar>
+                     <md-icon class="md-avatar-icon" md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
+                 </md-card-avatar>
+                 <md-card-header-text>
+                     <span class="md-title">{{request.failureType}} - {{request.requestType}}</span>
+                     <span class="md-subhead">{{request.address}}</span>
+                 </md-card-header-text>
+                 <md-icon ng-show="{{request.urgent}}" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
+             </md-card-header>
+             <md-content class="md-padding" layout-xs="column" layout="row">
+                 <video flex-gt-xs="66" flex-xs="100" src="http://player.vimeo.com/external/85569724.sd.mp4?s=43df5df0d733011263687d20a47557e4" muted controls></video>
+                 <div layout="column" flex-gt-xs="33" flex-xs="100">
+                    <img ng-src="https://s-media-cache-ak0.pinimg.com/236x/44/c9/a4/44c9a47bf022103971c9122843fe2d57.jpg" flex alt="Available Media">
+                    <img ng-src="http://i.dailymail.co.uk/i/pix/2014/07/30/article-2710303-201E848900000578-717_964x454.jpg" flex class="md-card-image" alt="Available Media">
+                 </div>
+             </md-content>
+             <md-card-icon-actions>
+                 <md-button class="md-icon-button" aria-label="Edit">
+                     <md-icon md-svg-icon="/icons/ic_mode_edit_black_48px.svg"></md-icon>
+                 </md-button>
+                 <md-button class="md-icon-button" aria-label="Add Photo/Video">
+                     <md-icon md-svg-icon="/icons/ic_cloud_upload_black_48px.svg"></md-icon>
+                 </md-button>
+             </md-card-icon-actions>
+             <md-card-title>
+                 <md-card-title-text>
+                     <span class="md-headline">Descrizione</span>
+                     <span class="md-subhead">{{request.description}}</span>
+                 </md-card-title-text>
+             </md-card-title>
+
+             <md-card-content>
+                 <simple>{{request | json}}</simple>
+             </md-card-content>
+         </md-card>
+     </div>
+ </div>
+</md-content>
 
 <md-button class="md-fab md-fab-bottom-right" ng-click="$ctrl.openCallForJob()">
     <md-icon md-svg-src="icons/ic_add_white_48px.svg"></md-icon>
