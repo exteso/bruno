@@ -16,6 +16,29 @@
             <img ng-src="http://i.dailymail.co.uk/i/pix/2014/07/30/article-2710303-201E848900000578-717_964x454.jpg" flex class="md-card-image" alt="Available Media">
          </div>
      </md-content>
+     <md-content class="md-padding">
+             <p><span class="md-headline">Descrizione</span></p>
+             <p><span class="md-subhead">{{$ctrl.request.description}}</span></p>
+     </md-content>
+     <md-content class="md-padding" ng-if="$ctrl.userType === 'SERVICE_PROVIDER'">
+     
+        <form ng-submit="$ctrl.makeBid($ctrl.bid)">
+	        <p><span class="md-headline">La mia offerta</span></p>
+	        <div ng-if="$ctrl.request.requestType === 'REPAIR' || $ctrl.request.requestType === 'QUOTE'">
+	            <md-input-container>
+	                <label>Costo</label>
+	                <input ng-model="$ctrl.bid.cost" required>
+	            </md-input-container>
+	        </div>
+	        <div ng-if="$ctrl.request.requestType === 'REPAIR' || $ctrl.requestType == 'MEETING' || $ctrl.requestType == 'INSPECTION' ">
+	            <md-datepicker ng-model="$ctrl.bid.date" md-placeholder="data" required></md-datepicker>
+	        </div>
+	        <div>
+	           <md-button class="md-raised md-primary" type="submit">Conferma</md-button>
+	        </div>
+        </form>
+        
+     </md-content>
      <md-card-icon-actions ng-if="$ctrl.userType === 'USER'">
          <md-button class="md-icon-button" aria-label="Edit">
              <md-icon md-svg-icon="/icons/ic_mode_edit_black_48px.svg"></md-icon>
@@ -24,12 +47,4 @@
              <md-icon md-svg-icon="/icons/ic_cloud_upload_black_48px.svg"></md-icon>
          </md-button>
      </md-card-icon-actions>
-     <md-card-icon-actions ng-if="$ctrl.userType === 'SERVICE_PROVIDER'">
-     </md-card-icon-actions>
-     <md-card-title>
-         <md-card-title-text>
-             <span class="md-headline">Descrizione</span>
-             <span class="md-subhead">{{$ctrl.request.description}}</span>
-         </md-card-title-text>
-     </md-card-title>
  </md-card>

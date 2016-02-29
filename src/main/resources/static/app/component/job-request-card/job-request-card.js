@@ -6,12 +6,16 @@
 			request: "=",
 			userType: '@'
 		},
-		controller: function($mdDialog) {
+		controller: function(JobRequest) {
 			var ctrl = this;
-			var request = ctrl.request;
-			//ctrl.openForJobEdit = openCallForJob;
-
-
+			
+			ctrl.makeBid = makeBid;
+			
+			function makeBid(bid) {
+				JobRequest.makeBid(ctrl.request.id, bid).then(function() {
+					
+				});
+			}
 		}
 	});
 	

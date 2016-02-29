@@ -10,16 +10,19 @@ import ch.digitalfondue.npjt.QueryRepository;
 
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
+import com.exteso.bruno.model.RequestState;
 import com.exteso.bruno.model.RequestType;
 
 @QueryRepository
 public interface JobRequestRepository {
 
-    @Query("insert into b_job_request(creation_time, creation_user_fk, address, urgent, fault_type, description, request_type) "
-            + " values (:creation_time, :creation_user_fk, :address, :urgent, :fault_type, :description, :request_type)")
+    @Query("insert into b_job_request(creation_time, creation_user_fk, address, urgent, fault_type, description, request_type, request_state) "
+            + " values (:creation_time, :creation_user_fk, :address, :urgent, :fault_type, :description, :request_type, :request_state)")
     int create(@Bind("creation_time") Date creationTime, @Bind("creation_user_fk") Long createUserId, @Bind("address") String address, 
                 @Bind("urgent") boolean urgent, @Bind("fault_type") FailureType faultType, 
-                @Bind("description") String description, @Bind("request_type") RequestType requestType);
+                @Bind("description") String description, 
+                @Bind("request_type") RequestType requestType,
+                @Bind("request_state") RequestState requestState);
     
     
     
@@ -27,8 +30,8 @@ public interface JobRequestRepository {
     List<JobRequest> findAllForUser(@Bind("userId") Long userId);
 
 
-    @Query("select * from b_job_request where fault_type in (:handled) order by creation_time DESC")
-    List<JobRequest> findAllWithType(@Bind("handled") Set<String> handled);
+    @Query("select * from b_job_request where request_state = :state and fault_type in (:handled) order by creation_time DESC")
+    List<JobRequest> findAllWithTypeAndState(@Bind("handled") Set<String> handled, @Bind("state") RequestState state);
     
     @Query("select * from b_job_request where id = :id")
     JobRequest findById(@Bind("id") long id);

@@ -24,6 +24,10 @@
 			
 			findAllForServiceProvider: function() {
 				return $http.get('api/job-request/list-for-service-provider').then(function(data) {return data.data});
+			},
+			
+			makeBid: function(id, bid) {
+				return $http.post('api/job-request/'+id+'/bid', bid);
 			}
 		};
 	});

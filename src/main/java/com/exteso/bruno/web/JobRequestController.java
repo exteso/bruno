@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
+import com.exteso.bruno.model.JobRequestBid;
 import com.exteso.bruno.model.JobRequestCreation;
+import com.exteso.bruno.model.JobRequestBidModification;
 import com.exteso.bruno.model.RequestType;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.service.JobRequestService;
@@ -47,7 +49,7 @@ public class JobRequestController {
     
     @RequestMapping("/api/job-request/list-for-service-provider")
     public List<JobRequest> findAllForServiceProvider(Principal principal) {
-        return jobRequestService.findForServiceProvider(UserIdentifier.from(principal));
+        return jobRequestService.findOpenForServiceProvider(UserIdentifier.from(principal));
     }
 
     @RequestMapping("/api/job-request/failure-type")
@@ -59,7 +61,24 @@ public class JobRequestController {
     public List<String> requestType() {
         return Arrays.asList(RequestType.values()).stream().map(Enum::name).collect(Collectors.toList());
     }
-
+    
+    @RequestMapping(value = "/api/job-request/{id}/bid-list", method = RequestMethod.GET)
+    public void showAllOffers(Principal principal) {
+        //only the creation user of the request can see this
+    }
+    
+    
+    @RequestMapping(value = "/api/job-request/{id}/bid", method = RequestMethod.GET)
+    public JobRequestBid showCurrentServiceProviderOffer(@PathVariable("id") long id, Principal principal) {
+        //FIXME only provider can do that
+        return jobRequestService.findBy(id, UserIdentifier.from(principal)).orElse(null);
+    }
+    
+    @RequestMapping(value = "/api/job-request/{id}/bid", method = RequestMethod.POST)
+    public void createOrUpdateOffer(@PathVariable("id") long id, @RequestBody JobRequestBidModification offer, Principal principal) {
+        jobRequestService.createOrUpdateBid(id, offer, UserIdentifier.from(principal));
+        //FIXME only provider can do that
+    }
     //
 
 }

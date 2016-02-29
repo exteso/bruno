@@ -16,6 +16,7 @@ import ch.digitalfondue.npjt.QueryFactory;
 import ch.digitalfondue.npjt.mapper.ZonedDateTimeMapper;
 
 import com.exteso.bruno.configuration.support.Platform;
+import com.exteso.bruno.repository.JobRequestBidRepository;
 import com.exteso.bruno.repository.JobRequestRepository;
 import com.exteso.bruno.repository.UserRepository;
 import com.exteso.bruno.service.ServicesMarker;
@@ -78,5 +79,10 @@ public class DataSourceConfiguration {
     @Bean
     public JobRequestRepository jobRequestRepository(QueryFactory queryFactory) {
         return queryFactory.from(JobRequestRepository.class);
+    }
+    
+    @Bean
+    public JobRequestBidRepository jobRequestBidRepository(QueryFactory queryFactory) {
+        return queryFactory.from(JobRequestBidRepository.class);
     }
 }

@@ -13,6 +13,7 @@ public class JobRequest {
     private final String description;
     private final RequestType requestType;
     private final String address;
+    private final RequestState state;
 
     public JobRequest(@Column("id") Long id,//
             @Column("creation_time") Date creationTime,//
@@ -21,7 +22,8 @@ public class JobRequest {
             @Column("urgent") boolean urgent,
             @Column("fault_type") FailureType failureType,
             @Column("description") String description,
-            @Column("request_type") RequestType requestType) {
+            @Column("request_type") RequestType requestType,
+            @Column("request_state") RequestState state) {
         this.id = id;
         this.creationTime = creationTime;
         this.address = address;
@@ -29,6 +31,7 @@ public class JobRequest {
         this.failureType = failureType;
         this.description = description;
         this.requestType = requestType;
+        this.state = state;
     }
 
     public Long getId() {
@@ -57,5 +60,9 @@ public class JobRequest {
 
     public RequestType getRequestType() {
         return requestType;
+    }
+
+    public RequestState getState() {
+        return state;
     }
 }

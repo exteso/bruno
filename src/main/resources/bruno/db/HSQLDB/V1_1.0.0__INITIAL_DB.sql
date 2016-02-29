@@ -17,7 +17,8 @@ create table b_job_request(
     urgent boolean not null,
     fault_type varchar(64) not null,
     description varchar(4096) not null,
-    request_type varchar(64) not null -- enum: urgent_request, quote_request (preventivo), ... 
+    request_type varchar(64) not null, -- enum: urgent_request, quote_request (preventivo), ...
+    request_state varchar(64) not null -- enum: open, assigned, processed
 );
 alter table b_job_request add foreign key(creation_user_fk) references b_user(id);
 
@@ -28,13 +29,19 @@ create table b_job_request_attachments(
 );
 alter table b_job_request_attachments add foreign key(job_request_fk) references b_job_request(id);
 
-create table b_job_request_responder(
+create table b_job_request_bid(
     job_request_fk integer not null,
-    user_fk integer not null
+    user_fk integer not null,
+    price integer,
+    selected_date timestamp,
+    accepted boolean,
+    creation_time timestamp,
+    last_update timestamp,
     -- other fields: state, date, price (?) etc...
 );
-alter table b_job_request_responder add foreign key(job_request_fk) references b_job_request(id);
-alter table b_job_request_responder add foreign key(user_fk) references b_user(id);
+alter table b_job_request_bid add foreign key(job_request_fk) references b_job_request(id);
+alter table b_job_request_bid add foreign key(user_fk) references b_user(id);
+alter table b_job_request_bid add constraint "unique_bid" unique(job_request_fk, user_fk);
 
 create table b_configuration(
     id integer identity not null,
