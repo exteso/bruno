@@ -1,4 +1,6 @@
  
- <h2>Request</h2>
- 
- {{$ctrl.request}}
+<h2>Request</h2>
+
+<div ng-if="$ctrl.request"> 
+    <br-job-request-card request="$ctrl.request"></br-job-request-card>
+</div>
