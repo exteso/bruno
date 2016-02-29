@@ -1,12 +1,24 @@
-<md-content class="md-padding" layout="column" layout-gt-sm="row">
- <div ng-repeat="request in $ctrl.requests" >
+<md-content>
 
-     <div flex>
-        <br-job-request-card request="request" user-type="USER"></br-job-request-card>
-     </div>
- </div>
+    <h2>Le mie richieste</h2>
+
+    <md-list>
+        <md-divider></md-divider>
+        <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
+            <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
+             <div class="md-list-item-text" layout="column">
+                <h3>{{request.failureType}} - {{request.address}}</h3>
+                <h4>{{request.requestType}}</h4>
+                <p>{{request.description}}</p>
+            </div>
+            <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
+            <md-divider></md-divider>
+        </md-list-item>
+    </md-list>
+    
+    
 </md-content>
-
+ 
 <md-button class="md-fab md-fab-bottom-right" ng-click="$ctrl.openCallForJob()">
     <md-icon md-svg-src="icons/ic_add_white_48px.svg"></md-icon>
     <md-tooltip md-direction="top">Call Bruno!</md-tooltip>

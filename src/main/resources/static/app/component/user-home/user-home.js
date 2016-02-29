@@ -2,9 +2,10 @@
 	
 	angular.module('bruno').component('brUserHome', {
 		templateUrl: 'app/component/user-home/user-home.html',
-		controller: function($mdDialog, JobRequest) {
+		controller: function($mdDialog, $state, JobRequest) {
 			var ctrl = this;
 			ctrl.openCallForJob = openCallForJob;
+			ctrl.openRequest = openRequest;
 			
 
 			//
@@ -54,6 +55,10 @@
 				ctrl.cancel = function() {
 					$mdDialog.cancel();
 				};
+			}
+			
+			function openRequest(request) {
+				$state.go('user-show-request', {requestId: request.id});
 			}
 		}
 	});

@@ -12,6 +12,13 @@
 			url: '/user',
 			template: '<br-user-home></br-user-home>'
 		})
+		.state('user-show-request', {
+			url: '/user/:requestId',
+			template: '<br-user-show-request request-id="requestId"></br-user-show-request>',
+			controller: function($scope, $stateParams) {
+				$scope.requestId = $stateParams.requestId;
+			}
+		})
 		.state('service-provider', {
 			url: '/service-provider',
 			template: '<br-service-provider></br-service-provider>'
