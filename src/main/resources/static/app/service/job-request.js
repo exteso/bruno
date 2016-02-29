@@ -28,6 +28,10 @@
 			
 			makeBid: function(id, bid) {
 				return $http.post('api/job-request/'+id+'/bid', bid);
+			},
+			
+			findBid: function(id) {
+				return $http.get('api/job-request/'+id+'/bid').then(function(data) {return data.data;});
 			}
 		};
 	});
