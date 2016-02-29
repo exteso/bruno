@@ -7,7 +7,7 @@
              <span class="md-title">{{$ctrl.request.failureType}} - {{$ctrl.request.requestType}}</span>
              <span class="md-subhead">{{$ctrl.request.address}}</span>
          </md-card-header-text>
-         <md-icon ng-show="{{$ctrl.request.urgent}}" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
+         <md-icon ng-if="$ctrl.request.urgent" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
      </md-card-header>
      <md-content class="md-padding" layout-xs="column" layout="row">
          <video flex-gt-xs="66" flex-xs="100" src="http://player.vimeo.com/external/85569724.sd.mp4?s=43df5df0d733011263687d20a47557e4" muted controls></video>
@@ -16,13 +16,15 @@
             <img ng-src="http://i.dailymail.co.uk/i/pix/2014/07/30/article-2710303-201E848900000578-717_964x454.jpg" flex class="md-card-image" alt="Available Media">
          </div>
      </md-content>
-     <md-card-icon-actions>
+     <md-card-icon-actions ng-if="$ctrl.userType === 'USER'">
          <md-button class="md-icon-button" aria-label="Edit">
              <md-icon md-svg-icon="/icons/ic_mode_edit_black_48px.svg"></md-icon>
          </md-button>
          <md-button class="md-icon-button" aria-label="Add Photo/Video">
              <md-icon md-svg-icon="/icons/ic_cloud_upload_black_48px.svg"></md-icon>
          </md-button>
+     </md-card-icon-actions>
+     <md-card-icon-actions ng-if="$ctrl.userType === 'SERVICE_PROVIDER'">
      </md-card-icon-actions>
      <md-card-title>
          <md-card-title-text>
