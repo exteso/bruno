@@ -30,4 +30,6 @@ public interface JobRequestRepository {
     @Query("select * from b_job_request where fault_type in (:handled) order by creation_time DESC")
     List<JobRequest> findAllWithType(@Bind("handled") Set<String> handled);
     
+    @Query("select * from b_job_request where id = :id")
+    JobRequest findById(@Bind("id") long id);
 }

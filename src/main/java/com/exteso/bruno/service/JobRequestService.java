@@ -47,4 +47,8 @@ public class JobRequestService {
         Set<String> handled = requestTypeHandled(from).stream().map(Enum::name).collect(Collectors.toSet());//FIXME;
         return jobRequestRepository.findAllWithType(handled);
     }
+    
+    public JobRequest findById(long id) {
+        return jobRequestRepository.findById(id);
+    }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,11 @@ public class JobRequestController {
     @RequestMapping(value = "/api/job-request", method = RequestMethod.POST)
     public void createRequest(@RequestBody JobRequestCreation jobRequest, Principal principal) {
         jobRequestService.create(jobRequest, UserIdentifier.from(principal), new Date());
+    }
+    
+    @RequestMapping("/api/job-request/{id}")
+    public JobRequest findById(@PathVariable("id") long id) {
+        return jobRequestService.findById(id);
     }
 
     @RequestMapping("/api/job-request/list")
