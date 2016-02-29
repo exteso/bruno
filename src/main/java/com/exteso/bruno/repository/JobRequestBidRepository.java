@@ -1,6 +1,7 @@
 package com.exteso.bruno.repository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import com.exteso.bruno.model.JobRequestBid;
@@ -23,5 +24,8 @@ public interface JobRequestBidRepository {
 
     @Query("select * from b_job_request_bid where job_request_fk = :requestId and user_fk = :userId")
     Optional<JobRequestBid> findBy(@Bind("requestId") long requestId, @Bind("userId") long userId);
+
+    @Query("select * from b_job_request_bid where job_request_fk = :requestId")
+    List<JobRequestBid> findAll(@Bind("requestId") long requestId);
     
 }

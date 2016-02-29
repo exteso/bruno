@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
 import com.exteso.bruno.model.JobRequestBid;
-import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.JobRequestBidModification;
+import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.RequestType;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.service.JobRequestService;
@@ -63,8 +63,9 @@ public class JobRequestController {
     }
     
     @RequestMapping(value = "/api/job-request/{id}/bid-list", method = RequestMethod.GET)
-    public void showAllOffers(Principal principal) {
+    public List<JobRequestBid> showAllBids(@PathVariable("id") long id, Principal principal) {
         //only the creation user of the request can see this
+        return jobRequestService.findAllBids(id, UserIdentifier.from(principal));
     }
     
     

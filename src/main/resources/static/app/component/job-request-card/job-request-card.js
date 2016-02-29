@@ -13,6 +13,8 @@
 			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
+			} else if (ctrl.userType === 'USER') {
+				loadAllBids();
 			}
 			
 			
@@ -23,7 +25,13 @@
 							date: bid.selectedDate ? new Date(bid.selectedDate) : null
 					};
 				});
-			} 
+			}
+			
+			function loadAllBids() {
+				JobRequest.findAllBids(ctrl.request.id).then(function(bids) {
+					ctrl.bids = bids;
+				});
+			}
 			
 			function makeBid(bid) {
 				JobRequest.makeBid(ctrl.request.id, bid).then(function() {

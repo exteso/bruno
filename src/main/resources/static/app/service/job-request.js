@@ -32,6 +32,10 @@
 			
 			findBid: function(id) {
 				return $http.get('api/job-request/'+id+'/bid').then(function(data) {return data.data;});
+			},
+			
+			findAllBids: function(id) {
+				return $http.get('api/job-request/'+id+'/bid-list').then(function(data) {return data.data;});
 			}
 		};
 	});

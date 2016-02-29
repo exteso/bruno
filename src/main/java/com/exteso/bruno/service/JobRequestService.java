@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
@@ -72,5 +73,11 @@ public class JobRequestService {
 
     public Optional<JobRequestBid> findBy(long id, UserIdentifier from) {
         return jobRequestBidRepository.findBy(id, userRepository.getId(from.getProvider(), from.getUsername()));
+    }
+
+    public List<JobRequestBid> findAllBids(long id, UserIdentifier from) {
+        //check access
+        Assert.isTrue(userRepository.getId(from.getProvider(), from.getUsername()).longValue() == jobRequestRepository.findById(id).getCreationUser());
+        return jobRequestBidRepository.findAll(id);
     }
 }
