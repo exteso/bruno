@@ -5,10 +5,10 @@ Support the main flow:
  3. the services providers, when receiving the request will be able to do (in function of the req. type): (~)
     - offer price + intervention date (if request is "urgent")
     - offer an inspection + date -> then offer a "quote" for the intervention
- 4. user (customer) select service provider (<- WIP)
+ 4. user (customer) select service provider 
  5. the selected service provider will receive the OK notification, the others the NOK
  6. ... the selected service provider will do the work ...
- 7. the service provider will mark the intervention as DONE
+ 7. the service provider will mark the intervention as DONE (<- WIP)
  8. the user can give feedback
  
  
