@@ -11,6 +11,8 @@
 			
 			ctrl.makeBid = makeBid;
 			
+			ctrl.acceptBid = acceptBid;
+			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
 			} else if (ctrl.userType === 'USER') {
@@ -36,6 +38,12 @@
 			function makeBid(bid) {
 				JobRequest.makeBid(ctrl.request.id, bid).then(function() {
 					loadBid();
+				});
+			}
+			
+			function acceptBid(bid) {
+				JobRequest.acceptBid(bid).then(function() {
+					loadAllBids();
 				});
 			}
 		}

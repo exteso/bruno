@@ -43,6 +43,7 @@
         <md-list>
             <md-list-item ng-repeat="bid in $ctrl.bids">
                 {{bid}}
+                <md-button class="md-secondary" ng-click="$ctrl.acceptBid(bid)">Accetta offerta</md-button>
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>

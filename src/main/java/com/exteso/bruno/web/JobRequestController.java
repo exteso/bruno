@@ -51,6 +51,11 @@ public class JobRequestController {
     public List<JobRequest> findAllForServiceProvider(Principal principal) {
         return jobRequestService.findOpenForServiceProvider(UserIdentifier.from(principal));
     }
+    
+    @RequestMapping("/api/job-request/list-accepted-for-service-provider")
+    public List<JobRequest> findAcceptedForServiceProvider(Principal principal) {
+        return jobRequestService.findAcceptedForServiceProvider(UserIdentifier.from(principal));
+    }
 
     @RequestMapping("/api/job-request/failure-type")
     public List<String> failureType() {
@@ -81,5 +86,10 @@ public class JobRequestController {
         //FIXME only provider can do that
     }
     //
+    
+    @RequestMapping(value = "/api/job-request/{id}/bid/{userId}/accept", method = RequestMethod.POST)
+    public void acceptBid(@PathVariable("id") long id, @PathVariable("userId") long userId, Principal principal) {
+        jobRequestService.acceptBid(id, userId, UserIdentifier.from(principal));
+    }
 
 }

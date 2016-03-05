@@ -27,5 +27,9 @@ public interface JobRequestBidRepository {
 
     @Query("select * from b_job_request_bid where job_request_fk = :requestId")
     List<JobRequestBid> findAll(@Bind("requestId") long requestId);
+
+    
+    @Query("update b_job_request_bid set accepted = (job_request_fk = :requestId and user_fk = :userId) where job_request_fk = :requestId")
+    int accept(@Bind("requestId") long id, @Bind("userId") long userId);
     
 }

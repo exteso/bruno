@@ -58,6 +58,11 @@ public class JobRequestService {
         return jobRequestRepository.findAllWithTypeAndState(handled, RequestState.OPEN);
     }
     
+    public List<JobRequest> findAcceptedForServiceProvider(UserIdentifier currentUser) {
+        Long userId = userRepository.getId(currentUser.getProvider(), currentUser.getUsername());
+        return jobRequestRepository.findAllWithStateAssignedToUser(RequestState.ASSIGNED, userId);
+    }
+    
     public JobRequest findById(long id) {
         return jobRequestRepository.findById(id);
     }
@@ -79,5 +84,10 @@ public class JobRequestService {
         //check access
         Assert.isTrue(userRepository.getId(from.getProvider(), from.getUsername()).longValue() == jobRequestRepository.findById(id).getCreationUser());
         return jobRequestBidRepository.findAll(id);
+    }
+
+    public void acceptBid(long id, long userId, UserIdentifier from) {
+        jobRequestRepository.updateState(id, RequestState.ASSIGNED);
+        jobRequestBidRepository.accept(id, userId);
     }
 }

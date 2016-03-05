@@ -26,6 +26,10 @@
 				return $http.get('api/job-request/list-for-service-provider').then(function(data) {return data.data});
 			},
 			
+			findAllAcceptedForServiceProvider: function() {
+				return $http.get('api/job-request/list-accepted-for-service-provider').then(function(data) {return data.data});
+			},
+			
 			makeBid: function(id, bid) {
 				return $http.post('api/job-request/'+id+'/bid', bid);
 			},
@@ -36,6 +40,10 @@
 			
 			findAllBids: function(id) {
 				return $http.get('api/job-request/'+id+'/bid-list').then(function(data) {return data.data;});
+			},
+			
+			acceptBid: function(bid) {
+				return $http.post('api/job-request/'+bid.requestId+'/bid/'+bid.userId+'/accept');
 			}
 		};
 	});

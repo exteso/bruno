@@ -35,4 +35,13 @@ public interface JobRequestRepository {
     
     @Query("select * from b_job_request where id = :id")
     JobRequest findById(@Bind("id") long id);
+    
+    @Query("update b_job_request set request_state = :request_state where id = :id")
+    int updateState(@Bind("id") long id, @Bind("request_state") RequestState requestState);
+
+
+    @Query("select b_job_request.* from b_job_request "
+            + " inner join b_job_request_bid on b_job_request.id = job_request_fk and b_job_request_bid.user_fk  = :userId "
+            + " where request_state = :state and accepted = true order by creation_time DESC")
+    List<JobRequest> findAllWithStateAssignedToUser(@Bind("state") RequestState assigned, @Bind("userId") Long userId);
 }
