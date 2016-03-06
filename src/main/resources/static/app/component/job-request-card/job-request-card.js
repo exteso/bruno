@@ -10,8 +10,10 @@
 			var ctrl = this;
 			
 			ctrl.makeBid = makeBid;
-			
 			ctrl.acceptBid = acceptBid;
+			ctrl.completeJob = completeJob;
+			
+			
 			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
@@ -26,6 +28,8 @@
 							cost : bid.price,
 							date: bid.selectedDate ? new Date(bid.selectedDate) : null
 					};
+					
+					ctrl.userBid = bid;
 				});
 			}
 			
@@ -46,6 +50,14 @@
 					loadAllBids();
 				});
 			}
+			
+			function completeJob(bid) {
+				JobRequest.completeJob(bid).then(function() {
+					JobRequest.findById(ctrl.request.id).then(function(req) {
+						ctrl.request = req;
+					})
+				});
+			};
 		}
 	});
 	

@@ -17,6 +17,8 @@
          </div>
      </md-content>
      <md-content class="md-padding">
+             <p class="md-headline">Indirizzo</p>
+             <p class="md-subhead">{{$ctrl.request.address}}</p>
              <p><span class="md-headline">Descrizione</span></p>
              <p><span class="md-subhead">{{$ctrl.request.description}}</span></p>
      </md-content>
@@ -41,6 +43,9 @@
         <p class="md-headline">La mia offerta</p>
         <p>Costo: {{$ctrl.bid.cost}}</p>
         <p>Data intervento: {{$ctrl.bid.date | date : 'dd.MM.yyyy'}}</p>
+        <p ng-if="$ctrl.userBid.accepted && $ctrl.request.state === 'ASSIGNED'">
+            <md-button class="md-primary md-raised" ng-click="$ctrl.completeJob($ctrl.userBid)">Lavoro completato</md-button>
+        </p>
      </md-content>
      <md-content class="md-padding" ng-if="$ctrl.userType === 'USER'">
         <p><span class="md-headline">Offerte</span></p>

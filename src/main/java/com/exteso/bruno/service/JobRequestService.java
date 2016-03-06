@@ -90,4 +90,13 @@ public class JobRequestService {
         jobRequestRepository.updateState(id, RequestState.ASSIGNED);
         jobRequestBidRepository.accept(id, userId);
     }
+
+    public void completeBid(long id, long userId, UserIdentifier from) {
+        // check access
+        Assert.isTrue(userRepository.getId(from.getProvider(), from.getUsername()).longValue() == userId && 
+                jobRequestBidRepository.findBy(id, userId).get().getAccepted() &&
+                jobRequestRepository.findById(id).getState() == RequestState.ASSIGNED);
+        
+        jobRequestRepository.updateState(id, RequestState.CLOSED);
+    }
 }

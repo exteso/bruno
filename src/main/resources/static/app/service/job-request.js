@@ -44,6 +44,10 @@
 			
 			acceptBid: function(bid) {
 				return $http.post('api/job-request/'+bid.requestId+'/bid/'+bid.userId+'/accept');
+			},
+			
+			completeJob : function(bid) {
+				return $http.post('api/job-request/'+bid.requestId+'/bid/'+bid.userId+'/complete')
 			}
 		};
 	});

@@ -14,7 +14,16 @@
 			
 			function loadAll() {
 				JobRequest.findAll().then(function(data) {
-					ctrl.requests = data;
+					
+					ctrl.requests = [];
+					ctrl.requestsCompleted = [];
+					angular.forEach(data, function(v) {
+						if(v.state === 'CLOSED') {
+							ctrl.requestsCompleted.push(v);
+						} else {
+							ctrl.requests.push(v);
+						}
+					});
 				});
 			}
 			

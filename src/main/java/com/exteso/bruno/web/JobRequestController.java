@@ -91,5 +91,10 @@ public class JobRequestController {
     public void acceptBid(@PathVariable("id") long id, @PathVariable("userId") long userId, Principal principal) {
         jobRequestService.acceptBid(id, userId, UserIdentifier.from(principal));
     }
+    
+    @RequestMapping(value = "/api/job-request/{id}/bid/{userId}/complete", method = RequestMethod.POST)
+    public void completeBid(@PathVariable("id") long id, @PathVariable("userId") long userId, Principal principal) {
+        jobRequestService.completeBid(id, userId, UserIdentifier.from(principal));
+    }
 
 }
