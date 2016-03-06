@@ -64,7 +64,7 @@ public class JobRequestController {
 
     @RequestMapping("/api/job-request/request-type")
     public List<String> requestType() {
-        return Arrays.asList(RequestType.values()).stream().map(Enum::name).collect(Collectors.toList());
+        return Arrays.asList(RequestType.REPAIR).stream().map(Enum::name).collect(Collectors.toList());
     }
     
     @RequestMapping(value = "/api/job-request/{id}/bid-list", method = RequestMethod.GET)

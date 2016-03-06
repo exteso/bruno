@@ -1,9 +1,9 @@
 <md-content>
 
-    <h2>Le mie richieste</h2>
-
+    <h2 class="md-padding">Le mie richieste:</h2>
+    <div class="md-padding" ng-if="$ctrl.requests.length == 0">Nessuna richiesta!</div>
     <md-list>
-        <md-divider></md-divider>
+        <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
         <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
              <div class="md-list-item-text" layout="column">

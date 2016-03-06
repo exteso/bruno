@@ -40,6 +40,7 @@
      </md-content>
      <md-content class="md-padding" ng-if="$ctrl.userType === 'USER'">
         <p><span class="md-headline">Offerte</span></p>
+        <p ng-if="$ctrl.bids.length == 0">Nessuna offerta!</p>
         <md-list>
             <md-list-item ng-repeat="bid in $ctrl.bids">
                 {{bid}}
@@ -48,12 +49,12 @@
             </md-list-item>
         </md-list>
      </md-content>
-     <md-card-icon-actions ng-if="$ctrl.userType === 'USER'">
+     <!-- <md-card-icon-actions ng-if="$ctrl.userType === 'USER'">
          <md-button class="md-icon-button" aria-label="Edit">
              <md-icon md-svg-icon="/icons/ic_mode_edit_black_48px.svg"></md-icon>
          </md-button>
          <md-button class="md-icon-button" aria-label="Add Photo/Video">
              <md-icon md-svg-icon="/icons/ic_cloud_upload_black_48px.svg"></md-icon>
          </md-button>
-     </md-card-icon-actions>
+     </md-card-icon-actions> -->
  </md-card>

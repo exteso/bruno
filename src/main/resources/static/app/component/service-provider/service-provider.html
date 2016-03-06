@@ -1,7 +1,8 @@
-<h2>New Requests</h2>
+<h2 class="md-padding">Nuove richieste</h2>
+<p ng-if="$ctrl.requests.length === 0" class="md-padding">Nessuna richiesta!</p>
 <md-content>
  <md-list>
-    <md-divider></md-divider>
+    <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
     <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
         <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          <div class="md-list-item-text" layout="column">
@@ -15,11 +16,12 @@
  </md-list>
 </md-content>
 
-<h2>Accepted Requests</h2>
+<h2 class="md-padding">Richieste accettate</h2>
 <!-- TODO USE COMPONENT -->
+<p ng-if="$ctrl.acceptedRequests.length === 0" class="md-padding">Nessuna richiesta accettata!</p>
 <md-content>
  <md-list>
-    <md-divider></md-divider>
+    <md-divider ng-if="$ctrl.acceptedRequests.length > 0"></md-divider>
     <md-list-item class="md-3-line" ng-repeat="request in $ctrl.acceptedRequests" ng-click="$ctrl.openRequest(request)">
         <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          <div class="md-list-item-text" layout="column">
