@@ -5,9 +5,11 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exteso.bruno.model.User;
 import com.exteso.bruno.repository.UserRepository;
 
 @RestController
@@ -23,5 +25,10 @@ public class UserEndpointController {
     @RequestMapping("/api/user")
     public Map<String, String> user(Principal principal) {
         return Collections.singletonMap("name", principal.getName());
+    }
+    
+    @RequestMapping("/api/user/{userId}")
+    public User getUserById(@PathVariable("userId") long userId) {
+        return userRepository.findById(userId);
     }
 }

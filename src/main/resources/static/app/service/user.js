@@ -18,6 +18,12 @@
                     cached = this.current();
                 }
                 return cached;
+            },
+            
+            findById: function(id) {
+            	return $http.get('api/user/'+id).then(function(data) {
+                	return data.data;
+                });
             }
 		};
 	});
