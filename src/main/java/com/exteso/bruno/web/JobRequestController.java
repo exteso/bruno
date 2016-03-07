@@ -56,6 +56,12 @@ public class JobRequestController {
     public List<JobRequest> findAcceptedForServiceProvider(Principal principal) {
         return jobRequestService.findAcceptedForServiceProvider(UserIdentifier.from(principal));
     }
+    
+    
+    @RequestMapping("api/job-request/list-completed-for-service-provider")
+    public List<JobRequest> findCompletedForServiceProvider(Principal principal) {
+        return jobRequestService.findCompletedForServiceProvider(UserIdentifier.from(principal));
+    }
 
     @RequestMapping("/api/job-request/failure-type")
     public List<String> failureType() {

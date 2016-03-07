@@ -19,6 +19,10 @@
 				JobRequest.findAllAcceptedForServiceProvider().then(function(data) {
 					ctrl.acceptedRequests = data; 
 				});
+				
+				JobRequest.findAllCompletedForServiceProvider().then(function(data) {
+					ctrl.completedRequests = data;
+				});
 			}
 			
 			

@@ -33,4 +33,22 @@
         <md-divider></md-divider>
     </md-list-item>
  </md-list>
+ 
+ 
+ <h2 class="md-padding">Richieste completate</h2>
+ <p ng-if="$ctrl.completedRequests.length === 0" class="md-padding">Nessuna richiesta accettata!</p> 
+ <md-content>
+ <md-list>
+    <md-divider ng-if="$ctrl.completedRequests.length > 0"></md-divider>
+    <md-list-item class="md-3-line" ng-repeat="request in $ctrl.completedRequests" ng-click="$ctrl.openRequest(request)">
+        <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
+         <div class="md-list-item-text" layout="column">
+            <h3>{{request.failureType}} - {{request.address}}</h3>
+            <h4>{{request.requestType}}</h4>
+            <p>{{request.description}}</p>
+        </div>
+        <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
+        <md-divider></md-divider>
+    </md-list-item>
+ </md-list>
 </md-content>

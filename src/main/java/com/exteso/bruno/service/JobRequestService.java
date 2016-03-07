@@ -63,6 +63,11 @@ public class JobRequestService {
         return jobRequestRepository.findAllWithStateAssignedToUser(RequestState.ASSIGNED, userId);
     }
     
+    public List<JobRequest> findCompletedForServiceProvider(UserIdentifier currentUser) {
+        Long userId = userRepository.getId(currentUser.getProvider(), currentUser.getUsername());
+        return jobRequestRepository.findAllWithStateAssignedToUser(RequestState.CLOSED, userId);
+    }
+    
     public JobRequest findById(long id) {
         return jobRequestRepository.findById(id);
     }

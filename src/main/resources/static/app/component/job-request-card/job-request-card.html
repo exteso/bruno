@@ -51,8 +51,12 @@
         <p><span class="md-headline">Offerte</span></p>
         <p ng-if="$ctrl.bids.length == 0">Nessuna offerta!</p>
         <md-list>
-            <md-list-item ng-repeat="bid in $ctrl.bids">
-                Ditta: <br-show-username user-id="bid.userId"></br-show-username> Costo: {{bid.price}} Data: {{bid.selectedDate | date : 'dd.MM.yyyy'}}
+            <md-list-item ng-repeat="bid in $ctrl.bids" class="md-3-line">
+                 <div class="md-list-item-text" layout="column">
+                    <h3>Ditta: <br-show-username user-id="bid.userId"></br-show-username></h3>
+                    <h4>Costo: {{bid.price}}</h4>
+                    <h4>Data: {{bid.selectedDate | date : 'dd.MM.yyyy'}}</h4>
+                </div>
                 <md-button ng-if="!bid.accepted && $ctrl.request.state === 'OPEN'" class="md-secondary" ng-click="$ctrl.acceptBid(bid)">Accetta offerta</md-button>
                 <md-button class="md-secondary"><md-icon ng-if="bid.accepted" md-svg-icon="/icons/ic_check_black_48px.svg" ></md-icon></md-button>
                 <md-divider></md-divider>

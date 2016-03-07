@@ -30,6 +30,10 @@
 				return $http.get('api/job-request/list-accepted-for-service-provider').then(function(data) {return data.data});
 			},
 			
+			findAllCompletedForServiceProvider: function() {
+				return $http.get('api/job-request/list-completed-for-service-provider').then(function(data) {return data.data});
+			},
+			
 			makeBid: function(id, bid) {
 				return $http.post('api/job-request/'+id+'/bid', bid);
 			},
