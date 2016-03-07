@@ -42,6 +42,16 @@
 				return $http.get('api/job-request/'+id+'/bid').then(function(data) {return data.data;});
 			},
 			
+			findAcceptedBid: function(id) {
+				return this.findAllBids(id).then(function(list) {
+					for(var i = 0; i < list.length;i++) {
+						if(list[i].accepted) {
+							return list[i];
+						}
+					}
+				})
+			},
+			
 			findAllBids: function(id) {
 				return $http.get('api/job-request/'+id+'/bid-list').then(function(data) {return data.data;});
 			},

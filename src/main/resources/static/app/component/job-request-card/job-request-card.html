@@ -22,7 +22,7 @@
              <p><span class="md-headline">Descrizione</span></p>
              <p><span class="md-subhead">{{$ctrl.request.description}}</span></p>
      </md-content>
-     <md-content class="md-padding" ng-if="$ctrl.userType === 'SERVICE_PROVIDER' && $ctrl.request.state === 'OPEN'">
+     <md-content class="md-padding" ng-if="$ctrl.userType === 'SERVICE_PROVIDER' && $ctrl.request.state === 'OPEN'" id="toast-container">
         <form ng-submit="$ctrl.makeBid($ctrl.bid)">
 	        <p><span class="md-headline">La mia offerta</span></p>
 	        <div ng-if="$ctrl.request.requestType === 'REPAIR' || $ctrl.request.requestType === 'QUOTE'">

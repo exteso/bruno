@@ -8,7 +8,7 @@
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
              <div class="md-list-item-text" layout="column">
                 <h3>{{request.failureType}} - {{request.address}}</h3>
-                <h4>{{request.requestType}}</h4>
+                <h4>{{request.requestType}}: Ci sono attualmente <br-bid-count request="request"></br-bid-count> offerta/e</h4>
                 <p>{{request.description}}</p>
             </div>
             <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
@@ -24,7 +24,7 @@
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
              <div class="md-list-item-text" layout="column">
                 <h3>{{request.failureType}} - {{request.address}}</h3>
-                <h4>{{request.requestType}}</h4>
+                <h4>{{request.requestType}}: il <br-intervention-date request="request"></br-intervention-date></h4>
                 <p>{{request.description}}</p>
             </div>
             <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>

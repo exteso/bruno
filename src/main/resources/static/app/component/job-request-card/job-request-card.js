@@ -6,7 +6,7 @@
 			request: "=",
 			userType: '@'
 		},
-		controller: function(JobRequest) {
+		controller: function(JobRequest, $mdToast) {
 			var ctrl = this;
 			
 			ctrl.makeBid = makeBid;
@@ -41,6 +41,7 @@
 			
 			function makeBid(bid) {
 				JobRequest.makeBid(ctrl.request.id, bid).then(function() {
+					$mdToast.show($mdToast.simple().textContent('Offerta salvata').parent(document.getElementById("toast-container")));
 					loadBid();
 				});
 			}
