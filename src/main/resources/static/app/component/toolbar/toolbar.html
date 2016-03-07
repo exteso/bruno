@@ -1,9 +1,31 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <h2> <img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar" alt="Chiama Bruno!" />
-            </md-icon><span>Bruno!</span></h2>
+        <h2 ng-click="$ctrl.$state.go('user-home')"><img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar" alt="Chiama Bruno!" /><span>Bruno!</span></h2>
         <span flex></span>
         <md-button class="md-raised" aria-label="Login" ng-if="$ctrl.user == undefined" ui-sref="login">Login</md-button>
         <span ng-if="$ctrl.user" ng-bind="$ctrl.user.name"></span>
+        
+        <md-menu ng-if="$ctrl.user">
+          <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+            <md-icon md-svg-icon="/icons/ic_more_vert_white_48px.svg"></md-icon>
+          </md-button>
+          <md-menu-content>
+            <md-menu-item>
+              <md-button ng-click="$ctrl.$state.go('user-home')">
+                User page
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="$ctrl.$state.go('service-provider')">
+                Service provider page
+              </md-button>
+            </md-menu-item>
+            <md-menu-item>
+              <md-button ng-click="$ctrl.logout()">
+                Logout
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
     </div>
 </md-toolbar>
