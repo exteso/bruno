@@ -16,6 +16,22 @@
         </md-list-item>
     </md-list>
     
+    <h2 class="md-padding">Le mie richieste in elaborazione</h2>
+    <div class="md-padding" ng-if="$ctrl.requestsAccepted.length == 0">Nessuna richiesta in elaborazione!</div>
+    <md-list>
+        <md-divider ng-if="$ctrl.requestsAccepted.length > 0"></md-divider>
+        <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requestsAccepted" ng-click="$ctrl.openRequest(request)">
+            <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
+             <div class="md-list-item-text" layout="column">
+                <h3>{{request.failureType}} - {{request.address}}</h3>
+                <h4>{{request.requestType}}</h4>
+                <p>{{request.description}}</p>
+            </div>
+            <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
+            <md-divider></md-divider>
+        </md-list-item>
+    </md-list>
+    
     <h2 class="md-padding">Le mie richieste completate</h2>
     <div class="md-padding" ng-if="$ctrl.requestsCompleted.length == 0">Nessuna richiesta!</div>
     <md-list>

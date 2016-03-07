@@ -17,9 +17,12 @@
 					
 					ctrl.requests = [];
 					ctrl.requestsCompleted = [];
+					ctrl.requestsAccepted = [];
 					angular.forEach(data, function(v) {
 						if(v.state === 'CLOSED') {
 							ctrl.requestsCompleted.push(v);
+						} else if (v.state === 'ASSIGNED') {
+							ctrl.requestsAccepted.push(v);
 						} else {
 							ctrl.requests.push(v);
 						}

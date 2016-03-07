@@ -1,15 +1,16 @@
-Service provider should have 3 lists:
+Service provider should have 4 lists:
 
- - open requests
- - request that he has bidded
- - accepted requests
- - completed requests
+ - open requests                |
+ - request that he has bidded   | they are currently mixed
+ 
+ - accepted requests  [ok]
+ - completed requests [ok]
  
 User should have 3 lists:
 
- - open requests
- - accepted requests
- - completed requests
+ - open requests        [ok]
+ - accepted requests    [ok]
+ - completed requests   [ok]
  
  
 For social login:
