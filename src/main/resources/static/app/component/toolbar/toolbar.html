@@ -2,7 +2,7 @@
     <div class="md-toolbar-tools">
         <h2 ng-click="$ctrl.$state.go('user-home')"><img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar" alt="Chiama Bruno!" /><span>Bruno!</span></h2>
         <span flex></span>
-        <span ng-if="$ctrl.user" ng-bind="$ctrl.user.provider + ':' + $ctrl.user.username"></span>
+        <span ng-if="$ctrl.user" ng-bind="$ctrl.username"></span>
         
         <md-menu ng-if="$ctrl.user">
           <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">

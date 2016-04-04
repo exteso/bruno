@@ -9,6 +9,12 @@
 			
 			User.currentCachedUser().then(function(user) {
 				ctrl.user = user;
+				
+				if(user.firstname || user.lastname) {
+					ctrl.username = user.firstname + (user.firstname && user.lastname ? ' ' : '') + (user.lastname ? user.lastname : '');
+				} else {
+					ctrl.username = user.email || (user.provider + ':' + user.username);
+				}
 			}, function() { //error
 				$state.go('login');
 			});

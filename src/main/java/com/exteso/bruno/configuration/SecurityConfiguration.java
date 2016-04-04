@@ -32,10 +32,12 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
 
 import com.exteso.bruno.model.UserIdentifier;
+import com.exteso.bruno.model.User.UserType;
 import com.exteso.bruno.repository.UserRepository;
 
 
@@ -117,9 +119,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(github(), "/login/github", "github", detailExtractor("login")));
-        filters.add(ssoFilter(google(), "/login/google", "google", detailExtractor("email")));
-        filters.add(ssoFilter(facebook(), "/login/facebook", "facebook", detailExtractor("id")));
+        filters.add(oauth2Filter(github(), "/login/github", "github", detailExtractor("login"), githubUserInfo()));
+        filters.add(oauth2Filter(google(), "/login/google", "google", detailExtractor("email"), googleUserInfo()));
+        filters.add(oauth2Filter(facebook(), "/login/facebook", "facebook", detailExtractor("id"), facebookUserInfo()));
         filter.setFilters(filters);
         return filter;
     }
@@ -127,25 +129,56 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @SuppressWarnings("unchecked")
     private Function<Authentication, String> detailExtractor(String key) {
-        return a -> (String) ((Map<String, Object>) a.getDetails()).get(key);
+        return auth -> (String) ((Map<String, Object>) auth.getDetails()).get(key);
+    }
+    
+    private static Function<Map<String, String>, UserInfo> githubUserInfo() {
+        return details -> new UserInfo(null, null, details.get("email"));
+    }
+    
+    private static Function<Map<String, String>, UserInfo> facebookUserInfo() {
+        return details -> new UserInfo(details.get("first_name"), details.get("last_name"), details.get("email"));
+    }
+    
+    private static Function<Map<String, String>, UserInfo> googleUserInfo() {
+        return details -> new UserInfo(details.get("given_name"), details.get("family_name"), details.get("email"));
     }
 
-    private Filter ssoFilter(ClientResources client, String path, String prefix, Function<Authentication, String> nameExtractor) {
+    private Filter oauth2Filter(ClientResources client, String path, String prefix, Function<Authentication, String> nameExtractor, Function<Map<String, String>, UserInfo> profileExtractor) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
-        filter.setAuthenticationSuccessHandler((req, res, auth) -> {
-            // ensure user presence
-            UserIdentifier userIdentifier = UserIdentifier.from(auth);
-            if(userRepository.count(userIdentifier.getProvider(), userIdentifier.getUsername()) == 0) {
-                //FIXME save firstname, lastname, email and set userType to CUSTOMER
-                userRepository.create(userIdentifier.getProvider(), userIdentifier.getUsername());
-            }
-            //
-            res.sendRedirect("/");
-        });
+        filter.setAuthenticationSuccessHandler(getSuccessHandler(profileExtractor));
         filter.setRestTemplate(template);
         filter.setTokenServices(new PrefixUserInfoTokenServices(prefix, new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId()), nameExtractor));
         return filter;
+    }
+    
+    private AuthenticationSuccessHandler getSuccessHandler(Function<Map<String, String>, UserInfo> profileExtractor) {
+        return (req, res, auth) -> {
+            // ensure user presence
+            UserIdentifier userIdentifier = UserIdentifier.from(auth);
+            if (userRepository.count(userIdentifier.getProvider(), userIdentifier.getUsername()) == 0) {
+                // FIXME save firstname, lastname, email and set userType to
+                // CUSTOMER
+                @SuppressWarnings("unchecked")
+                UserInfo userInfo = profileExtractor.apply((Map<String, String>) ((OAuth2Authentication) auth).getUserAuthentication().getDetails());
+                userRepository.create(userIdentifier.getProvider(), userIdentifier.getUsername(), userInfo.firstname, userInfo.lastname, userInfo.email, UserType.CUSTOMER);
+            }
+            //
+            res.sendRedirect("/");
+        };
+    }
+    
+    private static class UserInfo {
+        String firstname;
+        String lastname;
+        String email;
+        
+        UserInfo(String firstname, String lastname, String email) {
+            this.firstname = firstname;
+            this.lastname = lastname;
+            this.email = email;
+        }
     }
     
     static class PrefixUserInfoTokenServices implements ResourceServerTokenServices {
