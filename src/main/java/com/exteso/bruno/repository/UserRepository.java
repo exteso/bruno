@@ -20,4 +20,7 @@ public interface UserRepository {
 
     @Query("select * from b_user where id = :userId")
     User findById(@Bind("userId") long userId);
+    
+    @Query("select * from b_user where provider = :provider and username = :username")
+    User findBy(@Bind("provider") String provider, @Bind("username") String username);
 }

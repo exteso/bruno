@@ -137,6 +137,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             // ensure user presence
             UserIdentifier userIdentifier = UserIdentifier.from(auth);
             if(userRepository.count(userIdentifier.getProvider(), userIdentifier.getUsername()) == 0) {
+                //FIXME save firstname, lastname, email and set userType to CUSTOMER
                 userRepository.create(userIdentifier.getProvider(), userIdentifier.getUsername());
             }
             //
