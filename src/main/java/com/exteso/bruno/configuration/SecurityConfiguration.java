@@ -112,20 +112,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(github(), "/login/github", "github", defaultPrincipalExtractor()));
-        filters.add(ssoFilter(google(), "/login/google", "google", googleEmailExtractor()));
+        filters.add(ssoFilter(github(), "/login/github", "github", detailExtractor("login")));
+        filters.add(ssoFilter(google(), "/login/google", "google", detailExtractor("email")));
         filter.setFilters(filters);
         return filter;
     }
     
     
-    private Function<Authentication, String> defaultPrincipalExtractor() {
-        return a -> (String) a.getPrincipal();
-    }
-    
     @SuppressWarnings("unchecked")
-    private Function<Authentication, String> googleEmailExtractor() {
-        return a -> (String) ((Map<String, Object>) a.getDetails()).get("email");
+    private Function<Authentication, String> detailExtractor(String key) {
+        return a -> (String) ((Map<String, Object>) a.getDetails()).get(key);
     }
 
     private Filter ssoFilter(ClientResources client, String path, String prefix, Function<Authentication, String> nameExtractor) {
