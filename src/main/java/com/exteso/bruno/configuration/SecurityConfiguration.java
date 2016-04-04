@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
@@ -106,17 +108,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class);
     }
     
+    
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(ssoFilter(github(), "/login/github", "github"));
-        filters.add(ssoFilter(google(), "/login/google", "google"));
+        filters.add(ssoFilter(github(), "/login/github", "github", defaultPrincipalExtractor()));
+        filters.add(ssoFilter(google(), "/login/google", "google", googleEmailExtractor()));
         filter.setFilters(filters);
         return filter;
     }
+    
+    
+    private Function<Authentication, String> defaultPrincipalExtractor() {
+        return a -> (String) a.getPrincipal();
+    }
+    
+    @SuppressWarnings("unchecked")
+    private Function<Authentication, String> googleEmailExtractor() {
+        return a -> (String) ((Map<String, Object>) a.getDetails()).get("email");
+    }
 
-
-    private Filter ssoFilter(ClientResources client, String path, String prefix) {
+    private Filter ssoFilter(ClientResources client, String path, String prefix, Function<Authentication, String> nameExtractor) {
         OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(path);
         OAuth2RestTemplate template = new OAuth2RestTemplate(client.getClient(), oauth2ClientContext);
         filter.setAuthenticationSuccessHandler((req, res, auth) -> {
@@ -129,7 +141,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             res.sendRedirect("/");
         });
         filter.setRestTemplate(template);
-        filter.setTokenServices(new PrefixUserInfoTokenServices(prefix, new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId())));
+        filter.setTokenServices(new PrefixUserInfoTokenServices(prefix, new UserInfoTokenServices(client.getResource().getUserInfoUri(), client.getClient().getClientId()), nameExtractor));
         return filter;
     }
     
@@ -137,16 +149,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         private final String prefix;
         private final UserInfoTokenServices userInfoTokenServices;
+        private final Function<Authentication, String> nameExtractor;
         
-        PrefixUserInfoTokenServices(String prefix, UserInfoTokenServices userInfoTokenServices) {
+        PrefixUserInfoTokenServices(String prefix, UserInfoTokenServices userInfoTokenServices, Function<Authentication, String> nameExtractor) {
             this.prefix = prefix;
             this.userInfoTokenServices = userInfoTokenServices;
+            this.nameExtractor = nameExtractor;
         }
 
         @Override
         public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
             OAuth2Authentication loadAuthentication = userInfoTokenServices.loadAuthentication(accessToken);
-            return new OAuth2Authentication(loadAuthentication.getOAuth2Request(), new PrefixedAuthentication(prefix, loadAuthentication.getUserAuthentication()));
+            return new OAuth2Authentication(loadAuthentication.getOAuth2Request(), new PrefixedAuthentication(prefix, loadAuthentication.getUserAuthentication(), nameExtractor));
         }
 
         @Override
@@ -162,10 +176,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         private final String prefix;
         private final Authentication authentication;
+        private final Function<Authentication, String> nameExtractor;
         
-        PrefixedAuthentication(String prefix, Authentication authentication) {
+        PrefixedAuthentication(String prefix, Authentication authentication, Function<Authentication, String> nameExtractor) {
             this.prefix = prefix;
             this.authentication = authentication;
+            this.nameExtractor = nameExtractor;
         }
 
         @Override
@@ -193,7 +209,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             return new Principal() {
                 @Override
                 public String getName() {
-                    return prefix+":"+authentication.getPrincipal();
+                    return prefix + ":" + nameExtractor.apply(authentication);
                 }
             };
         }
