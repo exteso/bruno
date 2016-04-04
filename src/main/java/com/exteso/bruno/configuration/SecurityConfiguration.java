@@ -27,7 +27,6 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
-import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
@@ -84,6 +83,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     @Bean
+    @ConfigurationProperties("facebook")
+    ClientResources facebook() {
+        return new ClientResources();
+    }
+    
+    @Bean
     public FilterRegistrationBean oauth2ClientFilterRegistration(
             OAuth2ClientContextFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean();
@@ -114,6 +119,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         List<Filter> filters = new ArrayList<>();
         filters.add(ssoFilter(github(), "/login/github", "github", detailExtractor("login")));
         filters.add(ssoFilter(google(), "/login/google", "google", detailExtractor("email")));
+        filters.add(ssoFilter(facebook(), "/login/facebook", "facebook", detailExtractor("id")));
         filter.setFilters(filters);
         return filter;
     }
@@ -223,10 +229,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     
     static class ClientResources {
-        private OAuth2ProtectedResourceDetails client = new AuthorizationCodeResourceDetails();
+        private AuthorizationCodeResourceDetails client = new AuthorizationCodeResourceDetails();
         private ResourceServerProperties resource = new ResourceServerProperties();
         
-        public OAuth2ProtectedResourceDetails getClient() {
+        public AuthorizationCodeResourceDetails getClient() {
             return client;
         }
 
