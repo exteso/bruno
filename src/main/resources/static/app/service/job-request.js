@@ -61,7 +61,11 @@
 			},
 			
 			completeJob : function(bid) {
-				return $http.post('api/job-request/'+bid.requestId+'/bid/'+bid.userId+'/complete')
+				return $http.post('api/job-request/'+bid.requestId+'/bid/'+bid.userId+'/complete');
+			},
+			
+			deleteFile : function(requestId, hash) {
+				return $http.delete('api/job-request/'+requestId+'/file/'+hash);
 			}
 		};
 	});

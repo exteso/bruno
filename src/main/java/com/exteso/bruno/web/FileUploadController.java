@@ -72,13 +72,6 @@ public class FileUploadController {
         }
     }
 
-    @RequestMapping(value = "/api/file/{hash}", method = RequestMethod.DELETE)
-    @ResponseBody
-    public void delete(@PathVariable("hash") String hash, Principal principal) {
-        // check if file has same user
-        // check if file is not linked
-    }
-    
     private static Set<String> WHITE_LIST_MIME_TYPES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(//
             "image/jpeg", "image/png", "image/webp", "image/bmp",// images
             "video/webm", "video/ogg", "video/mp4"//video

@@ -21,6 +21,9 @@ public interface FileUploadRepository {
     @Query("insert into b_job_request_attachments(file_id_fk, job_request_fk) values ((select file_id from b_file_upload where file_hash = :hash) , :requestId)")
     int addToJobRequest(@Bind("requestId") long requestId, @Bind("hash") String hash);
     
+    @Query("delete from b_job_request_attachments where job_request_fk = :requestId and file_id_fk = (select file_id from b_file_upload where file_hash = :hash)")
+    int removeFromJobRequest(@Bind("requestId") long requestId, @Bind("hash") String hash);
+    
     @Query("select file_path from b_file_upload where file_hash = :hash")
     String getPath(@Bind("hash") String hash);
     

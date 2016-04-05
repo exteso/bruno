@@ -1,5 +1,6 @@
 package com.exteso.bruno.service;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -116,5 +117,15 @@ public class JobRequestService {
     
     public List<UploadedFile> findUploadedFilesForRequest(long id) {
         return fileUploadRepository.findUploadedFilesForRequest(id);
+    }
+
+    public void ensureOwnership(long id, Principal principal) {
+        UserIdentifier from = UserIdentifier.from(principal);
+        long userId = userRepository.getId(from.getProvider(), from.getUsername());
+        Assert.isTrue(jobRequestRepository.findById(id).getCreationUser() == userId);
+    }
+
+    public void removeFileReference(long id, String hash) {
+        fileUploadRepository.removeFromJobRequest(id, hash);
     }
 }

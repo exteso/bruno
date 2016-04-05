@@ -42,6 +42,12 @@ public class JobRequestController {
     public JobRequestWithMetadata findById(@PathVariable("id") long id) {
         return new JobRequestWithMetadata(jobRequestService.findById(id), jobRequestService.findUploadedFilesForRequest(id));
     }
+    
+    @RequestMapping(value = "/api/job-request/{id}/file/{hash}", method = RequestMethod.DELETE)
+    public void deleteFileReference(@PathVariable("id") long id, @PathVariable("hash") String hash, Principal principal) {
+        jobRequestService.ensureOwnership(id, principal);
+        jobRequestService.removeFileReference(id, hash);
+    }
 
     @RequestMapping("/api/job-request/list")
     public List<JobRequest> findAllForUser(Principal principal) {

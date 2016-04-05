@@ -9,15 +9,17 @@
          </md-card-header-text>
          <md-icon ng-if="$ctrl.request.urgent" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>
      </md-card-header>
-     <md-content class="md-padding">
+     <div class="md-padding">
          <md-grid-list md-cols-sm="1" md-cols="2" md-gutter="1em" md-row-height="4:3">
             <md-grid-tile ng-repeat="media in $ctrl.request.files" ng-if="$ctrl.hasContentType('image/', media) || $ctrl.hasContentType('video/', media)">
-                <!-- <video ng-src="api/file/{{media.hash}}" muted controls></video> -->
-                <div ng-if="$ctrl.hasContentType('video/', media)"><videogular><vg-media vg-src="media.source" vg-native-controls="true"></vg-media></videogular></div>
-                <a ng-if="$ctrl.hasContentType('image/', media)" ng-href="api/file/{{media.hash}}" target="_blank"><img ng-src="api/file/{{media.hash}}"></a>
+                <div>
+                    <div ng-if="$ctrl.hasContentType('video/', media)"><videogular><vg-media vg-src="media.source" vg-native-controls="true"></vg-media></videogular></div>
+                    <div ng-if="$ctrl.hasContentType('image/', media)"><a ng-href="api/file/{{media.hash}}" target="_blank"><img ng-src="api/file/{{media.hash}}"></a></div>
+                    <div ng-if="$ctrl.isOwner"><md-button class="md-icon-button md-accent" ng-click="$ctrl.showDeleteConfirm($event, media.hash)"><md-icon md-svg-icon="icons/ic_delete_black_48px.svg"></md-icon></md-button></div>
+                </div>
             </md-grid-tile>
         </md-grid-list>
-     </md-content>
+     </div>
      <md-content class="md-padding">
              <p class="md-headline">Indirizzo</p>
              <p class="md-subhead">{{$ctrl.request.address}}</p>

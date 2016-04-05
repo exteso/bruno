@@ -3,16 +3,17 @@
 	angular.module('bruno').component('brJobRequestCard', {
 		templateUrl: 'app/component/job-request-card/job-request-card.html',
 		bindings: {
-			request: "=",
+			request: '<',
 			userType: '@'
 		},
-		controller: function(JobRequest, $mdToast, $sce) {
+		controller: function(JobRequest, User, $mdToast, $mdDialog, $sce) {
 			var ctrl = this;
 			
 			ctrl.makeBid = makeBid;
 			ctrl.acceptBid = acceptBid;
 			ctrl.completeJob = completeJob;
 			ctrl.hasContentType = hasContentType;
+			ctrl.showDeleteConfirm = showDeleteConfirm;
 			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
@@ -22,9 +23,13 @@
 			
 			trustVideoUrls();
 			
+			User.currentCachedUser().then(function(user) {
+				ctrl.isOwner = user.id === ctrl.request.creationUser;
+			});
+			
 			function trustVideoUrls() {
 				for(var i = 0; i<ctrl.request.files.length;i++) {
-					var f = ctrl.request.files[0];
+					var f = ctrl.request.files[i];
 					if(hasContentType('video/', f)) {
 						f.source = [{src: $sce.trustAsResourceUrl('api/file/'+f.hash), type: f.contentType}];
 					}
@@ -73,6 +78,25 @@
 			function hasContentType(type, file) {
 				return file.contentType.indexOf(type) === 0;
 			};
+			
+			function showDeleteConfirm(ev, hash) {
+			    // Appending dialog to document.body to cover sidenav in docs app
+			    var confirm = $mdDialog.confirm()
+			          .title('Would you like to delete the media?')
+			          .textContent('The media will be deleted')
+			          .targetEvent(ev)
+			          .ok('Ok')
+			          .cancel('Cancel');
+			    $mdDialog.show(confirm).then(function() {
+			    	JobRequest.deleteFile(ctrl.request.id, hash).then(function() {
+			    		return JobRequest.findById(ctrl.request.id);
+			    	}).then(function(request) {
+			    		ctrl.request = request;
+			    		trustVideoUrls();
+			    	});
+			      //delete + reload
+			    }, function() {});
+			  };
 		}
 	});
 	
