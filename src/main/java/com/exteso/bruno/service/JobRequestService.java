@@ -19,6 +19,7 @@ import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.JobRequestBidModification;
 import com.exteso.bruno.model.RequestState;
 import com.exteso.bruno.model.UserIdentifier;
+import com.exteso.bruno.repository.FileUploadRepository;
 import com.exteso.bruno.repository.JobRequestBidRepository;
 import com.exteso.bruno.repository.JobRequestRepository;
 import com.exteso.bruno.repository.UserRepository;
@@ -30,19 +31,23 @@ public class JobRequestService {
     private final UserRepository userRepository;
     private final JobRequestRepository jobRequestRepository;
     private final JobRequestBidRepository jobRequestBidRepository;
+    private final FileUploadRepository fileUploadRepository;
 
     @Autowired
-    public JobRequestService(JobRequestRepository jobRequestRepository, JobRequestBidRepository jobRequestBidRepository, UserRepository userRepository) {
+    public JobRequestService(JobRequestRepository jobRequestRepository, JobRequestBidRepository jobRequestBidRepository, 
+            UserRepository userRepository, FileUploadRepository fileUploadRepository) {
         this.jobRequestRepository = jobRequestRepository;
         this.jobRequestBidRepository = jobRequestBidRepository;
         this.userRepository = userRepository;
+        this.fileUploadRepository = fileUploadRepository;
     }
     
     public void create(JobRequestCreation jobRequest, UserIdentifier from, Date date) {
-        jobRequestRepository.create(date, userRepository.getId(from.getProvider(), from.getUsername()), jobRequest.getAddress(), jobRequest.getUrgent(), 
-                jobRequest.getFaultType(), jobRequest.getDescription(), jobRequest.getRequestType(), RequestState.OPEN);
+        Long requestId = jobRequestRepository.create(date, userRepository.getId(from.getProvider(), from.getUsername()), jobRequest.getAddress(), jobRequest.getUrgent(), 
+                jobRequest.getFaultType(), jobRequest.getDescription(), jobRequest.getRequestType(), RequestState.OPEN).getKey();
         if (jobRequest.getFiles() != null && !jobRequest.getFiles().isEmpty()) {
-            // FIXME add relations
+            for(String hash : jobRequest.getFiles())
+            fileUploadRepository.addToJobRequest(requestId, hash);
         }
     }
     
