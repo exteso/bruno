@@ -14,37 +14,37 @@
         <form>
 	        <md-input-container class="md-block">
 	            <label>Indirizzo</label>
-	            <input ng-model="request.address" required>
+	            <input ng-model="newJobDialogController.request.address" required>
 	        </md-input-container>
 	        <md-input-container class="md-block">
-	            <md-switch ng-model="request.urgent" aria-label="Urgent">
+	            <md-switch ng-model="newJobDialogController.request.urgent" aria-label="Urgent">
 	                Urgent
 	            </md-switch>
 	        </md-input-container>
 	        <md-input-container class="md-block">
 	            <label>Guasto</label>
-	            <md-select ng-model="request.faultType" required md-on-open="newJobDialogController.loadFaultTypes()">
+	            <md-select ng-model="newJobDialogController.request.faultType" required md-on-open="newJobDialogController.loadFaultTypes()">
 	               <md-option ng-value="fault" ng-repeat="fault in newJobDialogController.faultTypes">{{fault}}</md-option>
 	            </md-select>
 	        </md-input-container>
 	        <md-input-container class="md-block">
 	            <label>Descrizione del guasto</label>
-	            <textarea ng-model="request.description" required></textarea>
+	            <textarea ng-model="newJobDialogController.request.description" required></textarea>
 	        </md-input-container>
 	        <md-input-container class="md-block">
                 <label>Cosa richiede</label>
-                <md-select ng-model="request.requestType" required md-on-open="newJobDialogController.loadRequestTypes()">
+                <md-select ng-model="newJobDialogController.request.requestType" required md-on-open="newJobDialogController.loadRequestTypes()">
                     <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{requestType}}</md-option>
                 </md-select>
             </md-input-container>
             
-            <br-file-upload uploading="newJobDialogController.uploading"></br-file-upload>
+            <br-file-upload uploading="newJobDialogController.uploading" on-add-new-file="newJobDialogController.addNewFile" on-delete-new-file="newJobDialogController.deleteNewFile"></br-file-upload>
             
         </form>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button class="md-primary" ng-click="newJobDialogController.create(request)" ng-disabled="newJobDialogController.uploading">Crea richiesta</md-button>
+      <md-button class="md-primary" ng-click="newJobDialogController.create(newJobDialogController.request)" ng-disabled="newJobDialogController.uploading">Crea richiesta</md-button>
       <span flex></span>
       <md-button ng-click="newJobDialogController.cancel()">
         Cancel

@@ -41,6 +41,9 @@ public class JobRequestService {
     public void create(JobRequestCreation jobRequest, UserIdentifier from, Date date) {
         jobRequestRepository.create(date, userRepository.getId(from.getProvider(), from.getUsername()), jobRequest.getAddress(), jobRequest.getUrgent(), 
                 jobRequest.getFaultType(), jobRequest.getDescription(), jobRequest.getRequestType(), RequestState.OPEN);
+        if (jobRequest.getFiles() != null && !jobRequest.getFiles().isEmpty()) {
+            // FIXME add relations
+        }
     }
     
     

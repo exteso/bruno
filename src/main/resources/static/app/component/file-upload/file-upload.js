@@ -22,7 +22,7 @@
 				} catch(e) {}
 				ctrl.files.splice(index, 1);
 				if(file.hash) {
-					ctrl.onDeleteNewFile(file.hash);
+					ctrl.onDeleteNewFile()(file.hash);
 				}
 				updateUploadingStatus();
 			};
@@ -60,9 +60,11 @@
 			    xhr.onreadystatechange = function() {
 			    	$scope.$applyAsync(function() {
 			    		if (xhr.readyState == 4 && xhr.status == 200) {
-			    			fileWrapper.status = 'UPLOADED';
-			    			fileWrapper.hash = JSON.parse(xhr.responseText).hash;
-			    			ctrl.onAddNewFile(fileWrapper.hash);
+			    			if(fileWrapper.status === 'UPLOADING') {
+			    				fileWrapper.status = 'UPLOADED';
+				    			fileWrapper.hash = JSON.parse(xhr.responseText).hash;
+				    			ctrl.onAddNewFile()(fileWrapper.hash);
+			    			} 
 				        } else {
 				        	fileWrapper.status = 'ERROR';
 				        }

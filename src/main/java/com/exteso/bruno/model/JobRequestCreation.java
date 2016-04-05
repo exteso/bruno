@@ -1,5 +1,7 @@
 package com.exteso.bruno.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class JobRequestCreation {
@@ -9,6 +11,7 @@ public class JobRequestCreation {
     private FailureType faultType;
     private String description;
     private RequestType requestType;
+    private List<String> files = new ArrayList<>();
 
     public String getAddress() {
         return address;
@@ -48,6 +51,14 @@ public class JobRequestCreation {
 
     public void setRequestType(RequestType requestType) {
         this.requestType = requestType;
+    }
+
+    public List<String> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<String> files) {
+        this.files = files;
     }
 
 }

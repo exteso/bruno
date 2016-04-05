@@ -44,6 +44,19 @@
 			function NewJobDialogController($mdDialog) {
 				var ctrl = this;
 				
+				ctrl.request = {files: []};
+				
+				ctrl.addNewFile = function(hash) {
+					ctrl.request.files.push(hash);
+				};
+				
+				ctrl.deleteNewFile = function(hash) {
+					var idx = ctrl.request.files.indexOf(hash); 
+					if(idx >= 0) {
+						ctrl.request.files.splice(idx, 1);
+					}
+				};
+				
 				ctrl.loadFaultTypes = function() {
 					return JobRequest.failureType().then(function(faultTypes) {
 						ctrl.faultTypes = faultTypes;

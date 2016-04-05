@@ -42,13 +42,17 @@ public class FileUploadController {
             Files.copy(fileIs, p, StandardCopyOption.REPLACE_EXISTING);
             String digest = DigestUtils.sha256Hex(Files.newInputStream(p));
             
+            //bypass, file already uploaded
+            if(fileUploadRepository.count(digest) == 1) {
+                return Collections.singletonMap("hash", digest);    
+            }
+            
             //FIXME upload to "s3"
             String path = null;
             UserIdentifier ui = UserIdentifier.from(principal);
             long userId = userRepository.getId(ui.getProvider(), ui.getUsername());
             String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
             String name = file.getOriginalFilename();
-            
             fileUploadRepository.add(digest, name, contentType, path, userId);
             
             return Collections.singletonMap("hash", digest);
