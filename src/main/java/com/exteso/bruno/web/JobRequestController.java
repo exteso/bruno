@@ -18,6 +18,7 @@ import com.exteso.bruno.model.JobRequest;
 import com.exteso.bruno.model.JobRequestBid;
 import com.exteso.bruno.model.JobRequestBidModification;
 import com.exteso.bruno.model.JobRequestCreation;
+import com.exteso.bruno.model.JobRequestWithMetadata;
 import com.exteso.bruno.model.RequestType;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.service.JobRequestService;
@@ -38,8 +39,8 @@ public class JobRequestController {
     }
     
     @RequestMapping("/api/job-request/{id}")
-    public JobRequest findById(@PathVariable("id") long id) {
-        return jobRequestService.findById(id);
+    public JobRequestWithMetadata findById(@PathVariable("id") long id) {
+        return new JobRequestWithMetadata(jobRequestService.findById(id), jobRequestService.findUploadedFilesForRequest(id));
     }
 
     @RequestMapping("/api/job-request/list")

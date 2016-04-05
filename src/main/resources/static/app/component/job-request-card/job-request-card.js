@@ -6,19 +6,29 @@
 			request: "=",
 			userType: '@'
 		},
-		controller: function(JobRequest, $mdToast) {
+		controller: function(JobRequest, $mdToast, $sce) {
 			var ctrl = this;
 			
 			ctrl.makeBid = makeBid;
 			ctrl.acceptBid = acceptBid;
 			ctrl.completeJob = completeJob;
-			
-			
+			ctrl.hasContentType = hasContentType;
 			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
 			} else if (ctrl.userType === 'USER') {
 				loadAllBids();
+			}
+			
+			trustVideoUrls();
+			
+			function trustVideoUrls() {
+				for(var i = 0; i<ctrl.request.files.length;i++) {
+					var f = ctrl.request.files[0];
+					if(hasContentType('video/', f)) {
+						f.source = [{src: $sce.trustAsResourceUrl('api/file/'+f.hash), type: f.contentType}];
+					}
+				}
 			}
 			
 			
@@ -58,6 +68,10 @@
 						ctrl.request = req;
 					})
 				});
+			};
+			
+			function hasContentType(type, file) {
+				return file.contentType.indexOf(type) === 0;
 			};
 		}
 	});

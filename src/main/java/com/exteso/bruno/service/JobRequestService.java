@@ -18,6 +18,7 @@ import com.exteso.bruno.model.JobRequestBid;
 import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.JobRequestBidModification;
 import com.exteso.bruno.model.RequestState;
+import com.exteso.bruno.model.UploadedFile;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.repository.FileUploadRepository;
 import com.exteso.bruno.repository.JobRequestBidRepository;
@@ -111,5 +112,9 @@ public class JobRequestService {
                 jobRequestRepository.findById(id).getState() == RequestState.ASSIGNED);
         
         jobRequestRepository.updateState(id, RequestState.CLOSED);
+    }
+    
+    public List<UploadedFile> findUploadedFilesForRequest(long id) {
+        return fileUploadRepository.findUploadedFilesForRequest(id);
     }
 }

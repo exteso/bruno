@@ -1,6 +1,6 @@
 (function() {
 	
-	var module = angular.module('bruno', ['ui.router', 'ngMaterial']);
+	var module = angular.module('bruno', ['ui.router', 'ngMaterial', "com.2fdevs.videogular", "ngSanitize"]);
 	
 	
 	module.config(function ($stateProvider, $urlRouterProvider) {
