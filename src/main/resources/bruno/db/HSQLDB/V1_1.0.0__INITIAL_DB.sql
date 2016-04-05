@@ -22,13 +22,6 @@ create table b_job_request(
 );
 alter table b_job_request add foreign key(creation_user_fk) references b_user(id);
 
-create table b_job_request_attachments(
-    id integer identity not null,
-    job_request_fk integer not null,
-    -- attachments : photo, video, additional comments, ...
-);
-alter table b_job_request_attachments add foreign key(job_request_fk) references b_job_request(id);
-
 create table b_job_request_bid(
     job_request_fk integer not null,
     user_fk integer not null,
@@ -50,3 +43,25 @@ create table b_configuration(
     description varchar(2048)
 );
 alter table b_configuration add constraint "unique_b_configuration_c_key" unique(c_key);
+
+
+create table b_file_upload(
+    file_id integer identity not null,
+    file_hash char(64) not null,
+    file_name varchar(512) not null,
+    file_content_type varchar(255) not null,
+    file_path varchar(512),
+    file_upload_date timestamp default sysdate not null,
+    file_user_id_fk integer not null
+);
+alter table b_file_upload add constraint "unique_b_file_upload_file_hash" unique(file_hash);
+alter table b_file_upload add foreign key(file_user_id_fk) references b_user(id);
+
+create table b_job_request_attachments(
+    file_id_fk integer not null,
+    job_request_fk integer not null,
+    primary key (file_id_fk, job_request_fk)
+);
+alter table b_job_request_attachments add foreign key(job_request_fk) references b_job_request(id);
+alter table b_job_request_attachments add foreign key(file_id_fk) references b_file_upload(file_id);
+

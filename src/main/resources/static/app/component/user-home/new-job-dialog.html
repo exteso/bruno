@@ -37,11 +37,14 @@
                     <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{requestType}}</md-option>
                 </md-select>
             </md-input-container>
+            
+            <br-file-upload uploading="newJobDialogController.uploading"></br-file-upload>
+            
         </form>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button class="md-primary" ng-click="newJobDialogController.create(request)">Crea richiesta</md-button>
+      <md-button class="md-primary" ng-click="newJobDialogController.create(request)" ng-disabled="newJobDialogController.uploading">Crea richiesta</md-button>
       <span flex></span>
       <md-button ng-click="newJobDialogController.cancel()">
         Cancel
