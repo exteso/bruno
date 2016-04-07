@@ -15,6 +15,13 @@
             <div ng-if="$ctrl.hasContentType('image/', media)"><a ng-href="api/file/{{media.hash}}" target="_blank"><img ng-src="api/file/{{media.hash}}"></a></div>
             <div ng-if="$ctrl.isOwner"><md-button class="md-icon-button md-accent" ng-click="$ctrl.showDeleteConfirm($event, media.hash)"><md-icon md-svg-icon="icons/ic_delete_black_48px.svg"></md-icon></md-button></div>
         </div>
+        
+        
+        <div ng-if="$ctrl.isOwner">
+            <br-file-upload hide-files="true" uploading="$ctrl.isUploading" on-add-new-file="$ctrl.addNewFile"></br-file-upload>
+            <md-progress-linear md-mode="indeterminate" ng-if="$ctrl.isUploading"></md-progress-linear>
+        </div>
+        
      </div>
      <md-content class="md-padding">
              <p class="md-headline">Indirizzo</p>

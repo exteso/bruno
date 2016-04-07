@@ -66,6 +66,9 @@
 			
 			deleteFile : function(requestId, hash) {
 				return $http.delete('api/job-request/'+requestId+'/file/'+hash);
+			},
+			addFile: function(requestId, hash) {
+				return $http.post('api/job-request/'+requestId+'/file/'+hash);
 			}
 		};
 	});

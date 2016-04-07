@@ -48,6 +48,12 @@ public class JobRequestController {
         jobRequestService.ensureOwnership(id, principal);
         jobRequestService.removeFileReference(id, hash);
     }
+    
+    @RequestMapping(value = "/api/job-request/{id}/file/{hash}", method = RequestMethod.POST)
+    public void addFileReference(@PathVariable("id") long id, @PathVariable("hash") String hash, Principal principal) {
+        jobRequestService.ensureOwnership(id, principal);
+        jobRequestService.addFileReference(id, hash);
+    }
 
     @RequestMapping("/api/job-request/list")
     public List<JobRequest> findAllForUser(Principal principal) {

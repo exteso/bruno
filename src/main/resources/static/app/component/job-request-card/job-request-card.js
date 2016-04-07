@@ -14,6 +14,9 @@
 			ctrl.completeJob = completeJob;
 			ctrl.hasContentType = hasContentType;
 			ctrl.showDeleteConfirm = showDeleteConfirm;
+			ctrl.addNewFile = addNewFile;
+			ctrl.isUploading = false;
+			//
 			
 			if(ctrl.userType === 'SERVICE_PROVIDER') {
 				loadBid();
@@ -79,6 +82,13 @@
 				return file.contentType.indexOf(type) === 0;
 			};
 			
+			function reloadJobRequest(id) {
+				JobRequest.findById(ctrl.request.id).then(function(request) {
+		    		ctrl.request = request;
+		    		trustVideoUrls();
+		    	});
+			}
+			
 			function showDeleteConfirm(ev, hash) {
 			    // Appending dialog to document.body to cover sidenav in docs app
 			    var confirm = $mdDialog.confirm()
@@ -89,14 +99,17 @@
 			          .cancel('Cancel');
 			    $mdDialog.show(confirm).then(function() {
 			    	JobRequest.deleteFile(ctrl.request.id, hash).then(function() {
-			    		return JobRequest.findById(ctrl.request.id);
-			    	}).then(function(request) {
-			    		ctrl.request = request;
-			    		trustVideoUrls();
-			    	});
+			    		reloadJobRequest(ctrl.request.id);
+			    	})
 			      //delete + reload
 			    }, function() {});
-			  };
+			};
+			
+			function addNewFile(hash) {
+				JobRequest.addFile(ctrl.request.id, hash).then(function() {
+					reloadJobRequest(ctrl.request.id);
+				});
+			}
 		}
 	});
 	

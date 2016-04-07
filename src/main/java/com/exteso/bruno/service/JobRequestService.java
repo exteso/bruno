@@ -128,4 +128,8 @@ public class JobRequestService {
     public void removeFileReference(long id, String hash) {
         fileUploadRepository.removeFromJobRequest(id, hash);
     }
+
+    public void addFileReference(long id, String hash) {
+        fileUploadRepository.addToJobRequest(id, hash);
+    }
 }
