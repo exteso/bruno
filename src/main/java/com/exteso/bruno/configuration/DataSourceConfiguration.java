@@ -21,7 +21,9 @@ import com.exteso.bruno.repository.FileUploadRepository;
 import com.exteso.bruno.repository.JobRequestBidRepository;
 import com.exteso.bruno.repository.JobRequestRepository;
 import com.exteso.bruno.repository.UserRepository;
+import com.exteso.bruno.service.FileSystemStorageService;
 import com.exteso.bruno.service.ServicesMarker;
+import com.exteso.bruno.service.StorageService;
 import com.zaxxer.hikari.HikariDataSource;
 
 @EnableTransactionManagement
@@ -92,5 +94,10 @@ public class DataSourceConfiguration {
     @Bean
     public FileUploadRepository fileUploadRepository(QueryFactory queryFactory) {
         return queryFactory.from(FileUploadRepository.class);
+    }
+    
+    @Bean
+    public StorageService getStorageService() {
+        return new FileSystemStorageService();
     }
 }

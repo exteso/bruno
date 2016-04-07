@@ -1,12 +1,10 @@
 package com.exteso.bruno.service;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -19,23 +17,22 @@ import com.exteso.bruno.repository.FileUploadRepository;
 public class FileService {
 
     private final FileUploadRepository fileUploadRepository;
+    private final StorageService storageService;
 
     @Autowired
-    public FileService(FileUploadRepository fileUploadRepository) {
+    public FileService(FileUploadRepository fileUploadRepository, StorageService storageService) {
         this.fileUploadRepository = fileUploadRepository;
+        this.storageService = storageService;
     }
 
     public String uploadFile(Path p, String hash) throws IOException {
-        // FIXME upload to "s3"
-        new File("/tmp/bruno/files/").mkdirs();
-        Path tmp = Paths.get("/tmp/bruno/files/", hash);
-        Files.copy(p, tmp, StandardCopyOption.REPLACE_EXISTING);
-        return tmp.toString();
+        try(InputStream is = Files.newInputStream(p)) {
+            return storageService.write(hash, is);
+        }
     }
 
     public void read(String hash, OutputStream os) throws IOException {
-        String path = fileUploadRepository.getPath(hash);
-        Files.copy(Paths.get(path), os);
+        storageService.read(hash, os);
     }
 
     public void removeUnusedFilesOlderThan(Date dateLimit) {
@@ -44,8 +41,7 @@ public class FileService {
             // FIXME delete from "s3"
             fileUploadRepository.getPath(unusedId).ifPresent((file) -> {
                 try {
-                    Path path = Paths.get(file);
-                    Files.deleteIfExists(path);
+                    storageService.delete(file);
                     fileUploadRepository.delete(unusedId);
                 } catch (IOException e) {
                     //TODO LOG
