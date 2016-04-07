@@ -17,3 +17,9 @@ md-card>:not(md-card-content) video {
     width: 100%;
     height: auto;
 }
+
+br-job-request-card .job-request-card-media img, br-job-request-card .job-request-card-media video{
+	display: block;
+    max-height: 450px;
+    width: initial;
+}
