@@ -1,6 +1,8 @@
 package com.exteso.bruno.repository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import com.exteso.bruno.model.UploadedFile;
 
@@ -32,4 +34,13 @@ public interface FileUploadRepository {
 
     @Query("select file_hash, file_content_type from b_file_upload inner join b_job_request_attachments on file_id_fk = file_id where job_request_fk = :id")
     List<UploadedFile> findUploadedFilesForRequest(@Bind("id") long id);
+
+    @Query("select file_id from b_file_upload left  join b_job_request_attachments on file_id = file_id_fk where file_id_fk is null and file_upload_date < :date")
+    List<Long> findUnusedFilesOlderThan(@Bind("date") Date date);
+
+    @Query("delete from b_file_upload where file_id = :id")
+    int delete(@Bind("id") long id);
+
+    @Query("select file_path from b_file_upload where file_id = :id")
+    Optional<String> getPath(@Bind("id") long unusedId);
 }
