@@ -22,6 +22,7 @@ import com.exteso.bruno.repository.JobRequestBidRepository;
 import com.exteso.bruno.repository.JobRequestRepository;
 import com.exteso.bruno.repository.UserRepository;
 import com.exteso.bruno.service.FileSystemStorageService;
+import com.exteso.bruno.service.S3StorageService;
 import com.exteso.bruno.service.ServicesMarker;
 import com.exteso.bruno.service.StorageService;
 import com.zaxxer.hikari.HikariDataSource;
@@ -97,7 +98,15 @@ public class DataSourceConfiguration {
     }
     
     @Bean
-    public StorageService getStorageService() {
-        return new FileSystemStorageService();
+    public StorageService getStorageService(Platform platform, Environment env) {
+        if(platform.useS3AsStorage(env)) {
+            String accessKey = platform.getS3AccessKey();
+            String secretKey = platform.getS3SecretKey();
+            String endpoint = platform.getS3Endpoint();
+            String bucketName = platform.getS3BucketName();
+            return new S3StorageService(accessKey, secretKey, bucketName, endpoint);
+        } else {
+            return new FileSystemStorageService();
+        }
     }
 }
