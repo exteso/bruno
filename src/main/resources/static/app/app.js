@@ -30,6 +30,10 @@
 				$scope.requestId = $stateParams.requestId;
 			}
 		})
+		.state('admin-home', {
+			url: '/admin',
+			template: 'admin home placeholder'
+		})
 		.state('login', {
 			url: '/login',
 			template: '<br-login></br-login>'

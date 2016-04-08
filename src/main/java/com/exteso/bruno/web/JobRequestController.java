@@ -101,8 +101,8 @@ public class JobRequestController {
     
     @RequestMapping(value = "/api/job-request/{id}/bid", method = RequestMethod.POST)
     public void createOrUpdateOffer(@PathVariable("id") long id, @RequestBody JobRequestBidModification offer, Principal principal) {
-        jobRequestService.createOrUpdateBid(id, offer, UserIdentifier.from(principal));
         //FIXME only provider can do that
+        jobRequestService.createOrUpdateBid(id, offer, UserIdentifier.from(principal));
     }
     //
     

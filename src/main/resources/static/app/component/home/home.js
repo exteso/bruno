@@ -1,10 +1,18 @@
 (function() {
 	
 	angular.module('bruno').component('brHome', {
-		templateUrl: 'app/component/home/home.html',
+		template: '<md-progress-circular md-mode="indeterminate"></md-progress-circular>',
 		controller: function($state, User) {
 			User.currentCachedUser().then(function(user) {
-				$state.go('user-home');
+				
+				var typeToState = {
+						CUSTOMER : 'user-home',
+						SERVICE_PROVIDER : 'service-provider',
+						ADMIN: 'admin-home'
+				};
+				
+				$state.go(typeToState[user.userType]);
+				
 			}, function() {
 				$state.go('login');
 			});

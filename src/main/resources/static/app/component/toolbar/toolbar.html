@@ -9,15 +9,30 @@
             <md-icon md-svg-icon="/icons/ic_more_vert_white_48px.svg"></md-icon>
           </md-button>
           <md-menu-content>
-            <md-menu-item>
+            <md-menu-item ng-if="$ctrl.user.userType === 'CUSTOMER'">
               <md-button ng-click="$ctrl.$state.go('user-home')">
-                User page
+                Home
               </md-button>
             </md-menu-item>
-            <md-menu-item>
-              <md-button ng-click="$ctrl.$state.go('service-provider')">
-                Service provider page
+            <md-menu-item ng-if="$ctrl.user.userType === 'CUSTOMER'">
+              <md-button ng-click="$ctrl.$state.go('register-as-service-provider')">
+                Register as a ServiceProvider
               </md-button>
+            </md-menu-item>
+            <md-menu-item ng-if="$ctrl.user.userType === 'SERVICE_PROVIDER'">
+              <md-button ng-click="$ctrl.$state.go('service-provider')">
+                Home
+              </md-button>
+            </md-menu-item>
+            <md-menu-item ng-if="$ctrl.user.userType === 'ADMIN'">
+              <md-button ng-click="$ctrl.$state.go('admin-home')">
+                Home
+              </md-button>
+            </md-menu-item>
+            <md-menu-item  ng-if="$ctrl.user.userType === 'SERVICE_PROVIDER' || $ctrl.user.userType === 'ADMIN'">
+                <md-button ng-click="$ctrl.$state.go('user-home')">
+                    My requests
+                </md-button>
             </md-menu-item>
             <md-menu-item>
               <md-button ng-click="$ctrl.logout()">
