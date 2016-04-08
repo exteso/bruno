@@ -1,13 +1,30 @@
 github:
   client:
-    clientId: a1c0da2417cb0e181bec
-    clientSecret: 
     accessTokenUri: https://github.com/login/oauth/access_token
     userAuthorizationUri: https://github.com/login/oauth/authorize
     clientAuthenticationScheme: form
   resource:
     userInfoUri: https://api.github.com/user
+google:
+  client:
+    accessTokenUri: https://accounts.google.com/o/oauth2/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+    clientAuthenticationScheme: form
+    scope: ['openid', 'email']
+  resource:
+    userInfoUri: https://www.googleapis.com/plus/v1/people/me/openIdConnect
+facebook:
+  client:
+    accessTokenUri: https://graph.facebook.com/v2.3/oauth/access_token
+    userAuthorizationUri: https://www.facebook.com/dialog/oauth
+    tokenName: oauth_token
+    authenticationScheme: query
+    clientAuthenticationScheme: form
+    scope: ['public_profile']
+  resource:
+    userInfoUri: https://graph.facebook.com/me
 spring:
   resources:
     chain:
       enabled: true
+server.session.timeout: 3600

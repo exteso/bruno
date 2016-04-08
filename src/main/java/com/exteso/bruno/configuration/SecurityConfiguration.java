@@ -10,6 +10,7 @@ import java.util.function.Function;
 import javax.servlet.Filter;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -18,6 +19,7 @@ import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
@@ -36,6 +38,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.filter.CompositeFilter;
 
+import com.exteso.bruno.configuration.support.Platform;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.model.User.UserType;
 import com.exteso.bruno.repository.UserRepository;
@@ -70,24 +73,38 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    Platform platform;
+    
+    @Autowired
+    Environment env;
+    
+    private static ClientResources prepareClientResource(Platform platform, Environment env, String provider) {
+        ClientResources c = new ClientResources();
+        Pair<String, String> conf = platform.getOauthConfiguration(env, provider);
+        c.client.setClientId(conf.getLeft());
+        c.client.setClientSecret(conf.getRight());
+        return c;
+    }
 
 
     @Bean
     @ConfigurationProperties("github")
     ClientResources github() {
-        return new ClientResources();
+        return prepareClientResource(platform, env, "GITHUB");
     }
-    
+
     @Bean
     @ConfigurationProperties("google")
     ClientResources google() {
-        return new ClientResources();
+        return prepareClientResource(platform, env, "GOOGLE");
     }
     
     @Bean
     @ConfigurationProperties("facebook")
     ClientResources facebook() {
-        return new ClientResources();
+        return prepareClientResource(platform, env, "FACEBOOK");
     }
     
     @Bean

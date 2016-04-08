@@ -100,9 +100,9 @@ public class DataSourceConfiguration {
     @Bean
     public StorageService getStorageService(Platform platform, Environment env) {
         if(platform.useS3AsStorage(env)) {
-            String accessKey = platform.getS3AccessKey();
-            String secretKey = platform.getS3SecretKey();
-            String endpoint = platform.getS3Endpoint();
+            String accessKey = platform.getS3AccessKey(env);
+            String secretKey = platform.getS3SecretKey(env);
+            String endpoint = platform.getS3Endpoint(env);
             String bucketName = platform.getS3BucketName();
             return new S3StorageService(accessKey, secretKey, bucketName, endpoint);
         } else {
