@@ -25,7 +25,7 @@
 				var v = $filter('filter')([user.firstname, user.lastname, user.email], function(val) {
 					return val != null;
 				});
-				return v.length > 0 ? v.join(' ') : user.username;
+				return user.provider + ':' + (v.length > 0 ? v.join(' ') : user.username);
 			}
 			
 			
