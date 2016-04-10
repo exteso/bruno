@@ -28,4 +28,4 @@ spring:
     chain:
       enabled: true
 server.session.timeout: 3600
-multipart.maxFileSize=25Mb
+multipart.maxFileSize: 25Mb
