@@ -1,8 +1,10 @@
 package com.exteso.bruno.repository;
 
+import java.security.Principal;
 import java.util.Date;
 
 import com.exteso.bruno.model.User;
+import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.model.User.UserType;
 
 import ch.digitalfondue.npjt.Bind;
@@ -30,4 +32,16 @@ public interface UserRepository {
 
     @Query("update b_user set user_request_type = :userType, user_request_type_date = :date where provider = :provider and username = :username")
     int setRequestAs(@Bind("provider") String provider, @Bind("username") String username, @Bind("userType") UserType userType, @Bind("date") Date date);
+    
+    public default long getId(UserIdentifier ui) {
+        return getId(ui.getProvider(), ui.getUsername());
+    }
+    
+    public default User findBy(UserIdentifier ui) {
+        return findBy(ui.getProvider(), ui.getUsername());
+    }
+    
+    public default User findBy(Principal principal) {
+        return findBy(UserIdentifier.from(principal));
+    }
 }

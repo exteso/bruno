@@ -2,6 +2,7 @@ package com.exteso.bruno.web;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +27,7 @@ public class UserEndpointController {
 
     @RequestMapping("/api/user")
     public User user(Principal principal) {
-        UserIdentifier ui = UserIdentifier.from(principal);
-        return userRepository.findBy(ui.getProvider(), ui.getUsername());
+        return userRepository.findBy(principal);
     }
     
     @RequestMapping("/api/user/{userId}")
@@ -39,5 +39,12 @@ public class UserEndpointController {
     public void requestAsServiceProvider(Principal principal) {
         UserIdentifier ui = UserIdentifier.from(principal);
         userRepository.setRequestAs(ui.getProvider(), ui.getUsername(), UserType.SERVICE_PROVIDER, new Date());
+    }
+    
+    
+    //FIXME add ROLE checking directly in security conf...
+    @RequestMapping("/api/admin/user-list")
+    public List<User> findAllUsers(Principal principal) {
+        return null;
     }
 }

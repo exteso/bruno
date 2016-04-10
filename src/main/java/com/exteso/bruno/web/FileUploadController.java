@@ -61,7 +61,7 @@ public class FileUploadController {
             //
             String path = fileService.uploadFile(p, digest);
             UserIdentifier ui = UserIdentifier.from(principal);
-            long userId = userRepository.getId(ui.getProvider(), ui.getUsername());
+            long userId = userRepository.getId(ui);
             String contentType = file.getContentType() != null ? file.getContentType() : "application/octet-stream";
             String name = file.getOriginalFilename();
             fileUploadRepository.add(digest, name, contentType, path, userId);

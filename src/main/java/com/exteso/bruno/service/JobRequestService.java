@@ -45,7 +45,7 @@ public class JobRequestService {
     }
     
     public void create(JobRequestCreation jobRequest, UserIdentifier from, Date date) {
-        Long requestId = jobRequestRepository.create(date, userRepository.getId(from.getProvider(), from.getUsername()), jobRequest.getAddress(), jobRequest.getUrgent(), 
+        Long requestId = jobRequestRepository.create(date, userRepository.getId(from), jobRequest.getAddress(), jobRequest.getUrgent(), 
                 jobRequest.getFaultType(), jobRequest.getDescription(), jobRequest.getRequestType(), RequestState.OPEN).getKey();
         if (jobRequest.getFiles() != null && !jobRequest.getFiles().isEmpty()) {
             for(String hash : jobRequest.getFiles())
@@ -55,7 +55,7 @@ public class JobRequestService {
     
     
     public List<JobRequest> findForUser(UserIdentifier user) {
-        long userId = userRepository.getId(user.getProvider(), user.getUsername());
+        long userId = userRepository.getId(user);
         return jobRequestRepository.findAllForUser(userId);
     }
     
@@ -69,12 +69,12 @@ public class JobRequestService {
     }
     
     public List<JobRequest> findAcceptedForServiceProvider(UserIdentifier currentUser) {
-        Long userId = userRepository.getId(currentUser.getProvider(), currentUser.getUsername());
+        long userId = userRepository.getId(currentUser);
         return jobRequestRepository.findAllWithStateAssignedToUser(RequestState.ASSIGNED, userId);
     }
     
     public List<JobRequest> findCompletedForServiceProvider(UserIdentifier currentUser) {
-        Long userId = userRepository.getId(currentUser.getProvider(), currentUser.getUsername());
+        long userId = userRepository.getId(currentUser);
         return jobRequestRepository.findAllWithStateAssignedToUser(RequestState.CLOSED, userId);
     }
     
@@ -83,7 +83,7 @@ public class JobRequestService {
     }
 
     public void createOrUpdateBid(long requestId, JobRequestBidModification bid, UserIdentifier from) {
-        Long userId = userRepository.getId(from.getProvider(), from.getUsername());
+        long userId = userRepository.getId(from);
         if(jobRequestBidRepository.count(requestId, userId) == 1) {
             jobRequestBidRepository.update(requestId, userId, bid.getCost(), bid.getDate());
         } else {
@@ -97,7 +97,7 @@ public class JobRequestService {
 
     public List<JobRequestBid> findAllBids(long id, UserIdentifier from) {
         //check access
-        Assert.isTrue(userRepository.getId(from.getProvider(), from.getUsername()).longValue() == jobRequestRepository.findById(id).getCreationUser());
+        Assert.isTrue(userRepository.getId(from) == jobRequestRepository.findById(id).getCreationUser());
         return jobRequestBidRepository.findAll(id);
     }
 
@@ -108,7 +108,7 @@ public class JobRequestService {
 
     public void completeBid(long id, long userId, UserIdentifier from) {
         // check access
-        Assert.isTrue(userRepository.getId(from.getProvider(), from.getUsername()).longValue() == userId && 
+        Assert.isTrue(userRepository.getId(from) == userId && 
                 jobRequestBidRepository.findBy(id, userId).get().getAccepted() &&
                 jobRequestRepository.findById(id).getState() == RequestState.ASSIGNED);
         
@@ -120,8 +120,7 @@ public class JobRequestService {
     }
 
     public void ensureOwnership(long id, Principal principal) {
-        UserIdentifier from = UserIdentifier.from(principal);
-        long userId = userRepository.getId(from.getProvider(), from.getUsername());
+        long userId = userRepository.getId(UserIdentifier.from(principal));
         Assert.isTrue(jobRequestRepository.findById(id).getCreationUser() == userId);
     }
 
