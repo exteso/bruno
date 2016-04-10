@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 
 import javax.servlet.Filter;
@@ -171,15 +172,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
     
     private AuthenticationSuccessHandler getSuccessHandler(Function<Map<String, String>, UserInfo> profileExtractor) {
+        Set<Pair<String, String>> adminUsers = platform.getAdmins(env);
         return (req, res, auth) -> {
             // ensure user presence
             UserIdentifier userIdentifier = UserIdentifier.from(auth);
             if (userRepository.count(userIdentifier.getProvider(), userIdentifier.getUsername()) == 0) {
-                // FIXME save firstname, lastname, email and set userType to
-                // CUSTOMER
+                //
                 @SuppressWarnings("unchecked")
                 UserInfo userInfo = profileExtractor.apply((Map<String, String>) ((OAuth2Authentication) auth).getUserAuthentication().getDetails());
-                userRepository.create(userIdentifier.getProvider(), userIdentifier.getUsername(), userInfo.firstname, userInfo.lastname, userInfo.email, UserType.CUSTOMER);
+                UserType userType = adminUsers.contains(Pair.of(userIdentifier.getProvider(), userIdentifier.getUsername())) ? UserType.ADMIN : UserType.CUSTOMER;
+                userRepository.create(userIdentifier.getProvider(), userIdentifier.getUsername(), userInfo.firstname, userInfo.lastname, userInfo.email, userType);
             }
             //
             res.sendRedirect("/");

@@ -1,8 +1,11 @@
 package com.exteso.bruno.configuration.support;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.core.env.Environment;
@@ -52,6 +55,20 @@ public enum Platform {
     
     public String getS3Endpoint(Environment env) {
         return getS3Credentials(env).get("accessHost");
+    }
+    
+    public Set<Pair<String, String>> getAdmins(Environment env) {
+        
+        if(!env.containsProperty("BRUNO_ADMIN_USERS")) {
+            return Collections.emptySet();
+        }
+        
+        try {
+            List<Map<String, String>> res = MAPPER.readValue(env.getRequiredProperty("BRUNO_ADMIN_USERS"), new TypeReference<List<Map<String, String>>>(){});
+            return res.stream().map(m -> Pair.of(m.get("provider"), m.get("username"))).collect(Collectors.toSet());
+        } catch(IOException e) {
+            throw new IllegalStateException("error while reading BRUNO_ADMIN_USERS value", e);
+        }
     }
     
     /**
