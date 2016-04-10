@@ -30,6 +30,10 @@
             	return $http.post('api/user/request-as-service-provider');
             },
             
+            acceptAsServiceProvider: function(user) {
+            	return $http.post('api/admin/user/'+user.id+'/confirm-as-service-provider');
+            },
+            
             findAll : function() {
             	return $http.get('api/admin/user-list').then(function(data) {
                 	return data.data;

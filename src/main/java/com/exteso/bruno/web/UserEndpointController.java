@@ -48,4 +48,10 @@ public class UserEndpointController {
         userRepository.ensureUserIsAdmin(principal);
         return userRepository.findAll();
     }
+    
+    @RequestMapping(value = "/api/admin/user/{userId}/confirm-as-service-provider", method = RequestMethod.POST)
+    public void confirm(@PathVariable("userId") long userId, Principal principal) {
+        userRepository.ensureUserIsAdmin(principal);
+        userRepository.confirmUserAsServiceProvider(userId);
+    }
 }

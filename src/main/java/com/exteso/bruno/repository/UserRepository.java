@@ -39,6 +39,9 @@ public interface UserRepository {
     @Query("select * from b_user order by first_name DESC, last_name DESC, username DESC, provider DESC")
     List<User> findAll();
     
+    @Query("update b_user set user_type = 'SERVICE_PROVIDER' where id = :userId")
+    int confirmUserAsServiceProvider(@Bind("userId") long userId);
+    
     public default long getId(UserIdentifier ui) {
         return getId(ui.getProvider(), ui.getUsername());
     }
@@ -54,4 +57,6 @@ public interface UserRepository {
     public default void ensureUserIsAdmin(Principal principal) {
         Assert.isTrue(findBy(principal).getUserType() == UserType.ADMIN, "user is not admin");
     }
+
+    
 }
