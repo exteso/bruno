@@ -24,6 +24,10 @@
             	return $http.get('api/user/'+id).then(function(data) {
                 	return data.data;
                 });
+            },
+            
+            confirmRequestAsServiceProvider: function() {
+            	return $http.post('api/user/request-as-service-provider');
             }
 		};
 	});

@@ -5,7 +5,9 @@ create table b_user(
     first_name varchar(255), 
     last_name varchar(255), 
     email_address varchar(255),
-    user_type varchar(64) -- enum: CUSTOMER/SERVICE_PROVIDER/ADMIN
+    user_type varchar(64), -- enum: CUSTOMER/SERVICE_PROVIDER/ADMIN
+    user_request_type varchar(64) default null,
+    user_request_type_date timestamp default null
 );
 alter table b_user add constraint "unique_b_user" unique(provider, username);
 

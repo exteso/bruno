@@ -1,5 +1,7 @@
 package com.exteso.bruno.repository;
 
+import java.util.Date;
+
 import com.exteso.bruno.model.User;
 import com.exteso.bruno.model.User.UserType;
 
@@ -25,4 +27,7 @@ public interface UserRepository {
     
     @Query("select * from b_user where provider = :provider and username = :username")
     User findBy(@Bind("provider") String provider, @Bind("username") String username);
+
+    @Query("update b_user set user_request_type = :userType, user_request_type_date = :date where provider = :provider and username = :username")
+    int setRequestAs(@Bind("provider") String provider, @Bind("username") String username, @Bind("userType") UserType userType, @Bind("date") Date date);
 }

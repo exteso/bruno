@@ -1,5 +1,7 @@
 package com.exteso.bruno.model;
 
+import java.util.Date;
+
 import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
 
 public class User {
@@ -15,6 +17,8 @@ public class User {
     private final String lastname;
     private final String email;
     private final UserType userType;
+    private final UserType userRequestType;
+    private final Date userRequestTypeDate;
     
     
     public User(@Column("id") long id, 
@@ -23,7 +27,9 @@ public class User {
             @Column("first_name") String firstname, 
             @Column("last_name") String lastname, 
             @Column("email_address") String email,
-            @Column("user_type") UserType userType) {
+            @Column("user_type") UserType userType,
+            @Column("user_request_type") UserType userRequestType,
+            @Column("user_request_type_date") Date userRequestTypeDate) {
         this.id = id;
         this.provider = provider;
         this.username = username;
@@ -31,6 +37,8 @@ public class User {
         this.lastname = lastname;
         this.email = email;
         this.userType = userType;
+        this.userRequestType = userRequestType;
+        this.userRequestTypeDate = userRequestTypeDate;
     }
 
 
@@ -65,5 +73,15 @@ public class User {
     
     public UserType getUserType() {
         return userType;
+    }
+
+
+    public UserType getUserRequestType() {
+        return userRequestType;
+    }
+
+
+    public Date getUserRequestTypeDate() {
+        return userRequestTypeDate;
     }
 }

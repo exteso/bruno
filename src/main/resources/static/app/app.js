@@ -19,6 +19,10 @@
 				$scope.requestId = $stateParams.requestId;
 			}
 		})
+		.state('register-as-service-provider', {
+			url: '/register-as-service-provider',
+			template: '<br-register-as-service-provider></br-register-as-service-provider>'
+		})
 		.state('service-provider', {
 			url: '/service-provider',
 			template: '<br-service-provider></br-service-provider>'
