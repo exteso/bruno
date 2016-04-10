@@ -36,7 +36,7 @@
 		})
 		.state('admin-home', {
 			url: '/admin',
-			template: 'admin home placeholder'
+			template: '<br-admin-home></br-admin-home>'
 		})
 		.state('login', {
 			url: '/login',

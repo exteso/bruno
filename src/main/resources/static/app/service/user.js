@@ -28,6 +28,12 @@
             
             confirmRequestAsServiceProvider: function() {
             	return $http.post('api/user/request-as-service-provider');
+            },
+            
+            findAll : function() {
+            	return $http.get('api/admin/user-list').then(function(data) {
+                	return data.data;
+                });
             }
 		};
 	});

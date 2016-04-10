@@ -45,6 +45,7 @@ public class UserEndpointController {
     //FIXME add ROLE checking directly in security conf...
     @RequestMapping("/api/admin/user-list")
     public List<User> findAllUsers(Principal principal) {
-        return null;
+        userRepository.ensureUserIsAdmin(principal);
+        return userRepository.findAll();
     }
 }

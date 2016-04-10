@@ -1,0 +1,13 @@
+<md-content>
+    <h2 class="md-padding">Upgrade to service provider requests</h2>
+    
+    <div class="md-padding" ng-if="$ctrl.requests.length == 0">Nessuna richiesta!</div>
+    <md-list>
+        <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
+        <md-list-item class="secondary-button-padding" ng-repeat="request in $ctrl.requests">
+            {{$ctrl.display(request)}}
+            <md-button class="md-secondary" ng-click="$ctrl.displayMoreInfo($event)">More Info/Accept</md-button>
+            <md-divider></md-divider>
+        </md-list-item>     
+    </md-list>
+</md-content>

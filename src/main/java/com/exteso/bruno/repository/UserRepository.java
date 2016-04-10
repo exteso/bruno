@@ -2,6 +2,9 @@ package com.exteso.bruno.repository;
 
 import java.security.Principal;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.util.Assert;
 
 import com.exteso.bruno.model.User;
 import com.exteso.bruno.model.UserIdentifier;
@@ -32,6 +35,9 @@ public interface UserRepository {
 
     @Query("update b_user set user_request_type = :userType, user_request_type_date = :date where provider = :provider and username = :username")
     int setRequestAs(@Bind("provider") String provider, @Bind("username") String username, @Bind("userType") UserType userType, @Bind("date") Date date);
+
+    @Query("select * from b_user order by first_name DESC, last_name DESC, username DESC, provider DESC")
+    List<User> findAll();
     
     public default long getId(UserIdentifier ui) {
         return getId(ui.getProvider(), ui.getUsername());
@@ -43,5 +49,9 @@ public interface UserRepository {
     
     public default User findBy(Principal principal) {
         return findBy(UserIdentifier.from(principal));
+    }
+    
+    public default void ensureUserIsAdmin(Principal principal) {
+        Assert.isTrue(findBy(principal).getUserType() == UserType.ADMIN, "user is not admin");
     }
 }
