@@ -37,6 +37,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.Assert;
 import org.springframework.web.filter.CompositeFilter;
 
 import com.exteso.bruno.configuration.support.Platform;
@@ -137,9 +138,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private Filter ssoFilter() {
         CompositeFilter filter = new CompositeFilter();
         List<Filter> filters = new ArrayList<>();
-        filters.add(oauth2Filter(github(), "/login/github", "github", detailExtractor("login"), githubUserInfo()));
-        filters.add(oauth2Filter(google(), "/login/google", "google", detailExtractor("email"), googleUserInfo()));
-        filters.add(oauth2Filter(facebook(), "/login/facebook", "facebook", detailExtractor("id"), facebookUserInfo()));
+        if (platform.hasOauthConfiguration(env, "GITHUB")) {
+            filters.add(oauth2Filter(github(), "/login/github", "github", detailExtractor("login"), githubUserInfo()));
+        }
+        if (platform.hasOauthConfiguration(env, "GOOGLE")) {
+            filters.add(oauth2Filter(google(), "/login/google", "google", detailExtractor("email"), googleUserInfo()));
+        }
+        if (platform.hasOauthConfiguration(env, "FACEBOOK")) {
+            filters.add(oauth2Filter(facebook(), "/login/facebook", "facebook", detailExtractor("id"), facebookUserInfo()));
+        }
+        
+        Assert.isTrue(!filters.isEmpty(), "No OAUTH filters configured");
         filter.setFilters(filters);
         return filter;
     }

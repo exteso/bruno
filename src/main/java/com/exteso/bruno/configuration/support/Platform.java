@@ -85,6 +85,10 @@ public enum Platform {
         }
     }
     
+    public boolean hasOauthConfiguration(Environment env, String provider) {
+        return env.containsProperty("BRUNO_OAUTH_"+provider);
+    }
+    
     
     private static final ObjectMapper MAPPER = new ObjectMapper();
     
