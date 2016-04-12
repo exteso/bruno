@@ -29,3 +29,4 @@ spring:
       enabled: true
 server.session.timeout: 3600
 multipart.maxFileSize: 25Mb
+multipart.maxRequestSize: 25Mb
