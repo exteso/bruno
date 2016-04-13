@@ -13,23 +13,36 @@ import org.springframework.core.env.Environment;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//TODO move CF specific values in a separate ENUM
 public enum Platform {
     DEFAULT;
 
     public String getUrl(Environment env) {
-        return "jdbc:hsqldb:mem:bruno";
+        if (isCF(env)) {
+            return getServiceCredentials(env, "mariadb").get("jdbcUrl");
+        } else {
+            return "jdbc:hsqldb:mem:bruno";
+        }
     }
 
     public String getUsername(Environment env) {
-        return "sa";
+        if (isCF(env)) {
+            return getServiceCredentials(env, "mariadb").get("username");
+        } else {
+            return "sa";
+        }
     }
 
     public String getPassword(Environment env) {
-        return "";
+        if (isCF(env)) {
+            return getServiceCredentials(env, "mariadb").get("password");
+        } else {
+            return "";
+        }
     }
 
     public String getDialect(Environment env) {
-        return "HSQLDB";
+        return isCF(env) ? "MYSQL" : "HSQLDB";
     }
 
     public boolean isHosting(Environment env) {
@@ -37,6 +50,10 @@ public enum Platform {
     }
     
     public boolean useS3AsStorage(Environment env) {
+        return isCF(env);
+    }
+    
+    private boolean isCF(Environment env) {
         return env.getProperty("VCAP_SERVICES") != null;
     }
     
@@ -46,15 +63,15 @@ public enum Platform {
     
     
     public String getS3AccessKey(Environment env) {
-        return getS3Credentials(env).get("accessKey");
+        return getServiceCredentials(env, "dynstrg").get("accessKey");
     }
     
     public String getS3SecretKey(Environment env) {
-        return getS3Credentials(env).get("sharedSecret");
+        return getServiceCredentials(env, "dynstrg").get("sharedSecret");
     }
     
     public String getS3Endpoint(Environment env) {
-        return getS3Credentials(env).get("accessHost");
+        return getServiceCredentials(env, "dynstrg").get("accessHost");
     }
     
     public Set<Pair<String, String>> getAdmins(Environment env) {
@@ -111,10 +128,10 @@ public enum Platform {
       </pre>
      */
     @SuppressWarnings("unchecked")
-    private static Map<String, String> getS3Credentials(Environment env) {
+    private static Map<String, String> getServiceCredentials(Environment env, String name) {
         try {
             Map<String, Object> r = MAPPER.readValue(env.getProperty("VCAP_SERVICES"), new TypeReference<Map<String, Object>>(){});
-            return (Map<String, String>) ((Map<String, Object>)((List<Object>) r.get("dynstrg")).get(0)).get("credentials");
+            return (Map<String, String>) ((Map<String, Object>)((List<Object>) r.get(name)).get(0)).get("credentials");
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
