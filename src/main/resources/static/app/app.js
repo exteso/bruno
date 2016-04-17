@@ -48,6 +48,7 @@
 		//
 		$translateProvider.useUrlLoader('/api/translations');
 		$translateProvider.fallbackLanguage('en');
+		$translateProvider.useSanitizeValueStrategy('escape');
 		
 	});
 	

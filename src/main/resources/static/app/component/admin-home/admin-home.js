@@ -5,8 +5,6 @@
 		controller: function(User, $filter, $mdDialog) {
 			var ctrl = this;
 			
-			ctrl.display = display;
-			
 			ctrl.displayMoreInfo = displayMoreInfo;
 			
 			loadRequestForServiceProvider();
@@ -21,21 +19,14 @@
 			}
 			
 			
-			function display(user) {
-				var v = $filter('filter')([user.firstname, user.lastname, user.email], function(val) {
-					return val != null;
-				});
-				return user.provider + ':' + (v.length > 0 ? v.join(' ') : user.username);
-			}
-			
-			
+
 			function displayMoreInfo($event, user) {
 				var confirm = $mdDialog.confirm()
-					.title('Accept user request')
-					.textContent('Accept service provider request for user: ' + display(user))
+					.title($filter('translate')('admin-home.acceptRequest'))
+					.textContent($filter('translate')('admin-home.request', user))
 					.targetEvent($event)
-					.ok('Accept')
-					.cancel('Cancel');
+					.ok($filter('translate')('admin-home.accept'))
+					.cancel($filter('translate')('admin-home.cancel'));
 				$mdDialog.show(confirm).then(function() {
 					User.acceptAsServiceProvider(user).then(loadRequestForServiceProvider);
 				});
