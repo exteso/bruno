@@ -1,12 +1,12 @@
 <md-content>
-    <h2 class="md-padding">Upgrade to service provider requests</h2>
+    <h2 class="md-padding" translate>admin-home.title</h2>
     
-    <div class="md-padding" ng-if="$ctrl.requests.length == 0">Nessuna richiesta!</div>
+    <div class="md-padding" ng-if="$ctrl.requests.length == 0" translate>admin-home.no-request</div>
     <md-list>
         <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
         <md-list-item class="secondary-button-padding" ng-repeat="user in $ctrl.requests">
             {{$ctrl.display(user)}}
-            <md-button class="md-secondary" ng-click="$ctrl.displayMoreInfo($event, user)">Accept</md-button>
+            <md-button class="md-secondary" ng-click="$ctrl.displayMoreInfo($event, user)" translate>admin-home.accept</md-button>
             <md-divider></md-divider>
         </md-list-item>     
     </md-list>

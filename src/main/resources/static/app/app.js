@@ -1,9 +1,9 @@
 (function() {
 	
-	var module = angular.module('bruno', ['ui.router', 'ngMaterial', "com.2fdevs.videogular", "ngSanitize"]);
+	var module = angular.module('bruno', ['ui.router', 'ngMaterial', "com.2fdevs.videogular", "ngSanitize", 'pascalprecht.translate']);
 	
 	
-	module.config(function ($stateProvider, $urlRouterProvider) {
+	module.config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
 		$stateProvider.state('home', {
 			url: '/',
 			template: '<br-home></br-home>'
@@ -44,6 +44,12 @@
 		});
 		
 		$urlRouterProvider.otherwise('/');
+		
+		
+		//
+		$translateProvider.useUrlLoader('/api/translations');
+		$translateProvider.preferredLanguage('it');
+		$translateProvider.fallbackLanguage('en');
 	});
 	
 })();

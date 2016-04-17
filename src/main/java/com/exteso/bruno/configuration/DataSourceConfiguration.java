@@ -17,6 +17,7 @@ import ch.digitalfondue.npjt.QueryFactory;
 import ch.digitalfondue.npjt.mapper.ZonedDateTimeMapper;
 
 import com.exteso.bruno.configuration.support.Platform;
+import com.exteso.bruno.configuration.support.SerializableResourceBundleMessageSource;
 import com.exteso.bruno.repository.FileUploadRepository;
 import com.exteso.bruno.repository.JobRequestBidRepository;
 import com.exteso.bruno.repository.JobRequestRepository;
@@ -108,5 +109,12 @@ public class DataSourceConfiguration {
         } else {
             return new FileSystemStorageService();
         }
+    }
+    
+    @Bean(name="messageSource")
+    public SerializableResourceBundleMessageSource getMessageSource() {
+        SerializableResourceBundleMessageSource s = new SerializableResourceBundleMessageSource();
+        s.setBasename("classpath:/messages");
+        return s;
     }
 }
