@@ -31,26 +31,33 @@ public class UserEndpointController {
     public User user(Principal principal) {
         return userRepository.findBy(principal);
     }
-    
+
     @RequestMapping("/api/user/{userId}")
     public User getUserById(@PathVariable("userId") long userId) {
         return userRepository.findById(userId);
     }
-    
+
     @RequestMapping(value = "/api/user/request-as-service-provider", method = RequestMethod.POST)
     public void requestAsServiceProvider(@RequestBody RegisterAsServiceProvider request, Principal principal) {
         UserIdentifier ui = UserIdentifier.from(principal);
-        userRepository.setRequestAs(ui.getProvider(), ui.getUsername(), UserType.SERVICE_PROVIDER, new Date());
+        userRepository.setRequestAs(ui.getProvider(), ui.getUsername(), UserType.SERVICE_PROVIDER, new Date(),//
+                request.getCompanyName(),//
+                request.getFieldOfWork(),//
+                request.getAddress(),//
+                request.getPhoneNumber(),//
+                request.getContactEmail(),//
+                request.getVatNumber(),//
+                request.getNotes()//
+                );
     }
-    
-    
-    //FIXME add ROLE checking directly in security conf...
+
+    // FIXME add ROLE checking directly in security conf...
     @RequestMapping("/api/admin/user-list")
     public List<User> findAllUsers(Principal principal) {
         userRepository.ensureUserIsAdmin(principal);
         return userRepository.findAll();
     }
-    
+
     @RequestMapping(value = "/api/admin/user/{userId}/confirm-as-service-provider", method = RequestMethod.POST)
     public void confirm(@PathVariable("userId") long userId, Principal principal) {
         userRepository.ensureUserIsAdmin(principal);

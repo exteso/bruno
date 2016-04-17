@@ -21,42 +21,56 @@ public interface UserRepository {
     int count(@Bind("provider") String provider, @Bind("username") String username);
 
     @Query("insert into b_user(provider, username, first_name, last_name, email_address, user_type) values (:provider, :username, :firstname, :lastname, :email, :usertype)")
-    int create(@Bind("provider") String provider, @Bind("username") String username, 
-               @Bind("firstname") String firstname, @Bind("lastname") String lastname, @Bind("email") String email, @Bind("usertype") UserType usertype);
-    
+    int create(@Bind("provider") String provider, @Bind("username") String username, @Bind("firstname") String firstname, @Bind("lastname") String lastname,
+            @Bind("email") String email, @Bind("usertype") UserType usertype);
+
     @Query("select id from b_user where provider = :provider and username = :username")
     Long getId(@Bind("provider") String provider, @Bind("username") String username);
 
     @Query("select * from b_user where id = :userId")
     User findById(@Bind("userId") long userId);
-    
+
     @Query("select * from b_user where provider = :provider and username = :username")
     User findBy(@Bind("provider") String provider, @Bind("username") String username);
 
-    @Query("update b_user set user_request_type = :userType, user_request_type_date = :date where provider = :provider and username = :username")
-    int setRequestAs(@Bind("provider") String provider, @Bind("username") String username, @Bind("userType") UserType userType, @Bind("date") Date date);
+    @Query("update b_user set user_request_type = :userType, user_request_type_date = :date, "//
+            + " company_name = :company_name, "//
+            + " company_field_of_work = :company_field_of_work, "//
+            + " company_address = :company_address, "//
+            + " company_phone_number = :company_phone_number, "//
+            + " company_email = :company_email, "//
+            + " company_vat_id = :company_vat_id, "//
+            + " company_notes = :company_notes "//
+            + " where provider = :provider and username = :username")
+    int setRequestAs(@Bind("provider") String provider, @Bind("username") String username, @Bind("userType") UserType userType, @Bind("date") Date date,
+            @Bind("company_name") String companyName,//
+            @Bind("company_field_of_work") int fieldOfWork,//
+            @Bind("company_address") String address,//
+            @Bind("company_phone_number") String phoneNumber,//
+            @Bind("company_email") String contactEmail,//
+            @Bind("company_vat_id") String vatNumber,//
+            @Bind("company_notes") String notes);
 
     @Query("select * from b_user order by first_name DESC, last_name DESC, username DESC, provider DESC")
     List<User> findAll();
-    
+
     @Query("update b_user set user_type = 'SERVICE_PROVIDER' where id = :userId")
     int confirmUserAsServiceProvider(@Bind("userId") long userId);
-    
+
     public default long getId(UserIdentifier ui) {
         return getId(ui.getProvider(), ui.getUsername());
     }
-    
+
     public default User findBy(UserIdentifier ui) {
         return findBy(ui.getProvider(), ui.getUsername());
     }
-    
+
     public default User findBy(Principal principal) {
         return findBy(UserIdentifier.from(principal));
     }
-    
+
     public default void ensureUserIsAdmin(Principal principal) {
         Assert.isTrue(findBy(principal).getUserType() == UserType.ADMIN, "user is not admin");
     }
 
-    
 }

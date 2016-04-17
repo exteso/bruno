@@ -2,6 +2,8 @@ package com.exteso.bruno.model;
 
 import java.util.Map;
 
+import org.springframework.util.Assert;
+
 public class RegisterAsServiceProvider {
 
     private String companyName;
@@ -66,5 +68,18 @@ public class RegisterAsServiceProvider {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+    
+    public int getFieldOfWork() {
+        Assert.isTrue(fieldOfWorks != null, "fieldOfWorks cannot be null");
+        
+        //
+        int r = fieldOfWorks.entrySet().stream()//
+                .filter(kv -> kv.getValue())//
+                .map(kv -> kv.getKey().position())//
+                .reduce(0, (total, v) -> total | v);
+        
+        Assert.isTrue(r != 0, "At least one must be selected");
+        return r;
     }
 }
