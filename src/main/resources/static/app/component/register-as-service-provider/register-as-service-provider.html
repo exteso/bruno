@@ -1,14 +1,14 @@
 <md-content>
-    <h2 class="md-padding">Register as service provider</h2>
+    <h2 class="md-padding" translate>register-as-service-provider.title</h2>
     <div class="md-padding" ng-if="$ctrl.user.userRequestType == null">
         <form ng-submit="$ctrl.confirm()">
-            <md-button class="md-primary md-raised" type="submit">Confirm request</md-button>
+            <md-button class="md-primary md-raised" type="submit"><span translate>register-as-service-provider.confirm-request</span></md-button>
         </form>
     </div>
     <div class="md-padding" ng-if="$ctrl.user.userRequestType != null && $ctrl.user.userRequestType != $ctrl.user.userType">
-        <p>Request in elaboration, please wait.</p>
+        <p translate>register-as-service-provider.request-in-elaboration</p>
     </div>
     <div class="md-padding" ng-if="$ctrl.user.userRequestType != null && $ctrl.user.userRequestType == $ctrl.user.userType">
-        <p>You are already a service provider</p>
+        <p translate>register-as-service-provider.already-service-provider</p>
     </div>
 </md-content>

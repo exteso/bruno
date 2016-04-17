@@ -24,17 +24,17 @@
         
      </div>
      <md-content class="md-padding">
-             <p class="md-headline">Indirizzo</p>
+             <p class="md-headline" translate>job-request-card.address</p>
              <p class="md-subhead">{{$ctrl.request.address}}</p>
-             <p><span class="md-headline">Descrizione</span></p>
+             <p><span class="md-headline" translate>job-request-card.description</span></p>
              <p><span class="md-subhead">{{$ctrl.request.description}}</span></p>
      </md-content>
      <md-content class="md-padding" ng-if="$ctrl.userType === 'SERVICE_PROVIDER' && $ctrl.request.state === 'OPEN'" id="toast-container">
         <form ng-submit="$ctrl.makeBid($ctrl.bid)">
-	        <p><span class="md-headline">La mia offerta</span></p>
+	        <p><span class="md-headline" translate>job-request-card.my-offer</span></p>
 	        <div ng-if="$ctrl.request.requestType === 'REPAIR' || $ctrl.request.requestType === 'QUOTE'">
 	            <md-input-container>
-	                <label>Costo</label>
+	                <label translate>job-request-card.cost</label>
 	                <input ng-model="$ctrl.bid.cost" required>
 	            </md-input-container>
 	        </div>
@@ -42,40 +42,32 @@
 	            <md-datepicker ng-model="$ctrl.bid.date" md-placeholder="data" required></md-datepicker>
 	        </div>
 	        <div>
-	           <md-button class="md-raised md-primary" type="submit">Conferma</md-button>
+	           <md-button class="md-raised md-primary" type="submit"><span translate>job-request-card.confirm</span></md-button>
 	        </div>
         </form>
      </md-content>
      <md-content class="md-padding" ng-if="$ctrl.userType === 'SERVICE_PROVIDER' && $ctrl.request.state === 'ASSIGNED'">
-        <p class="md-headline">La mia offerta</p>
-        <p>Costo: {{$ctrl.bid.cost}}</p>
-        <p>Data intervento: {{$ctrl.bid.date | date : 'dd.MM.yyyy'}}</p>
+        <p class="md-headline" translate>job-request-card.my-offer</p>
+        <p><span translate>job-request-card.cost</span>: {{$ctrl.bid.cost}}</p>
+        <p><span translate>job-request-card.intervention-date</span>: {{$ctrl.bid.date | date : 'dd.MM.yyyy'}}</p>
         <p ng-if="$ctrl.userBid.accepted && $ctrl.request.state === 'ASSIGNED'">
-            <md-button class="md-primary md-raised" ng-click="$ctrl.completeJob($ctrl.userBid)">Lavoro completato</md-button>
+            <md-button class="md-primary md-raised" ng-click="$ctrl.completeJob($ctrl.userBid)"><span translate>job-request-card.work-completed</span></md-button>
         </p>
      </md-content>
      <md-content class="md-padding" ng-if="$ctrl.userType === 'USER'">
-        <p><span class="md-headline">Offerte</span></p>
-        <p ng-if="$ctrl.bids.length == 0">Nessuna offerta!</p>
+        <p><span class="md-headline" translate>job-request-card.bids</span></p>
+        <p ng-if="$ctrl.bids.length == 0" translate>job-request-card.no-bids</p>
         <md-list>
             <md-list-item ng-repeat="bid in $ctrl.bids" class="md-3-line">
                  <div class="md-list-item-text" layout="column">
-                    <h3>Ditta: <br-show-username user-id="bid.userId"></br-show-username></h3>
-                    <h4>Costo: {{bid.price}}</h4>
-                    <h4>Data: {{bid.selectedDate | date : 'dd.MM.yyyy'}}</h4>
+                    <h3><span translate>job-request-card.company</span>: <br-show-username user-id="bid.userId"></br-show-username></h3>
+                    <h4><span translate>job-request-card.cost</span>: {{bid.price}}</h4>
+                    <h4><span translate>job-request-card.date</span>: {{bid.selectedDate | date : 'dd.MM.yyyy'}}</h4>
                 </div>
-                <md-button ng-if="!bid.accepted && $ctrl.request.state === 'OPEN'" class="md-secondary" ng-click="$ctrl.acceptBid(bid)">Accetta offerta</md-button>
+                <md-button ng-if="!bid.accepted && $ctrl.request.state === 'OPEN'" class="md-secondary" ng-click="$ctrl.acceptBid(bid)"><span translate>job-request-card.accept-bid</span></md-button>
                 <md-button class="md-secondary"><md-icon ng-if="bid.accepted" md-svg-icon="/icons/ic_check_black_48px.svg" ></md-icon></md-button>
                 <md-divider></md-divider>
             </md-list-item>
         </md-list>
      </md-content>
-     <!-- <md-card-icon-actions ng-if="$ctrl.userType === 'USER'">
-         <md-button class="md-icon-button" aria-label="Edit">
-             <md-icon md-svg-icon="/icons/ic_mode_edit_black_48px.svg"></md-icon>
-         </md-button>
-         <md-button class="md-icon-button" aria-label="Add Photo/Video">
-             <md-icon md-svg-icon="/icons/ic_cloud_upload_black_48px.svg"></md-icon>
-         </md-button>
-     </md-card-icon-actions> -->
  </md-card>

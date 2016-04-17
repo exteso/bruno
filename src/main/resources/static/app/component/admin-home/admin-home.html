@@ -6,7 +6,7 @@
         <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
         <md-list-item class="secondary-button-padding" ng-repeat="user in $ctrl.requests">
             {{$ctrl.display(user)}}
-            <md-button class="md-secondary" ng-click="$ctrl.displayMoreInfo($event, user)" translate>admin-home.accept</md-button>
+            <md-button class="md-secondary" ng-click="$ctrl.displayMoreInfo($event, user)"><span translate>admin-home.accept</span></md-button>
             <md-divider></md-divider>
         </md-list-item>     
     </md-list>
