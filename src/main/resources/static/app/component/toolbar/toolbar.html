@@ -1,6 +1,6 @@
 <md-toolbar>
     <div class="md-toolbar-tools">
-        <h2 ng-click="$ctrl.$state.go('user-home')"><img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar" alt="Chiama Bruno!" /><span>Bruno!</span></h2>
+        <h2 ng-click="$ctrl.$state.go('user-home')"><img ng-src="/img/plumber.png" style="height: 36px;" class="md-avatar"/><span translate>toolbar.bruno</span></h2>
         <span flex></span>
         <span ng-if="$ctrl.user" ng-bind="$ctrl.username"></span>
         
@@ -11,32 +11,32 @@
           <md-menu-content>
             <md-menu-item ng-if="$ctrl.user.userType === 'CUSTOMER'">
               <md-button ng-click="$ctrl.$state.go('user-home')">
-                Home
+                <span translate>toolbar.home</span>
               </md-button>
             </md-menu-item>
             <md-menu-item ng-if="$ctrl.user.userType === 'CUSTOMER'">
               <md-button ng-click="$ctrl.$state.go('register-as-service-provider')">
-                Register as a ServiceProvider
+                <span translate>toolbar.register-as-service-provider</span>
               </md-button>
             </md-menu-item>
             <md-menu-item ng-if="$ctrl.user.userType === 'SERVICE_PROVIDER'">
               <md-button ng-click="$ctrl.$state.go('service-provider')">
-                Home
+                <span translate>toolbar.home</span>
               </md-button>
             </md-menu-item>
             <md-menu-item ng-if="$ctrl.user.userType === 'ADMIN'">
               <md-button ng-click="$ctrl.$state.go('admin-home')">
-                Home
+                <span translate>toolbar.home</span>
               </md-button>
             </md-menu-item>
             <md-menu-item  ng-if="$ctrl.user.userType === 'SERVICE_PROVIDER' || $ctrl.user.userType === 'ADMIN'">
                 <md-button ng-click="$ctrl.$state.go('user-home')">
-                    My requests
+                    <span translate>toolbar.my-requests</span>
                 </md-button>
             </md-menu-item>
             <md-menu-item>
               <md-button ng-click="$ctrl.logout()">
-                Logout
+                <span translate>toolbar.logout</span>
               </md-button>
             </md-menu-item>
           </md-menu-content>

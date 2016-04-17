@@ -1,5 +1,5 @@
-<h2 class="md-padding">Nuove richieste</h2>
-<p ng-if="$ctrl.requests.length === 0" class="md-padding">Nessuna richiesta!</p>
+<h2 class="md-padding" translate>service-provider.new-requests</h2>
+<p ng-if="$ctrl.requests.length === 0" class="md-padding" translate>service-provider.no-requests</p>
 <md-content>
  <md-list>
     <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
@@ -16,9 +16,9 @@
  </md-list>
 </md-content>
 
-<h2 class="md-padding">Richieste accettate</h2>
+<h2 class="md-padding" translate>service-provider.accepted-requests</h2>
 <!-- TODO USE COMPONENT -->
-<p ng-if="$ctrl.acceptedRequests.length === 0" class="md-padding">Nessuna richiesta accettata!</p>
+<p ng-if="$ctrl.acceptedRequests.length === 0" class="md-padding" translate>service-provider.no-accepted-requests</p>
 <md-content>
  <md-list>
     <md-divider ng-if="$ctrl.acceptedRequests.length > 0"></md-divider>
@@ -35,8 +35,8 @@
  </md-list>
  
  
- <h2 class="md-padding">Richieste completate</h2>
- <p ng-if="$ctrl.completedRequests.length === 0" class="md-padding">Nessuna richiesta completata!</p> 
+ <h2 class="md-padding" translate>service-provider.completed-requests</h2>
+ <p ng-if="$ctrl.completedRequests.length === 0" class="md-padding" translate>service-provider.no-completed-requests</p> 
  <md-content>
  <md-list>
     <md-divider ng-if="$ctrl.completedRequests.length > 0"></md-divider>
