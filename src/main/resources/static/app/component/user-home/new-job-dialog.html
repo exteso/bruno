@@ -1,11 +1,11 @@
-<md-dialog aria-label="Richiesta"  ng-cloak flex="80">
+<md-dialog ng-cloak flex="80">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Create a request for a worker</h2>
+        <h2 translate>user-home.new-job-dialog.create-a-new-request</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="newJobDialogController.cancel()">
-          <md-icon md-svg-src="icons/ic_close_white_48px.svg" aria-label="Close dialog"></md-icon>
+          <md-icon md-svg-src="icons/ic_close_white_48px.svg"></md-icon>
         </md-button>
       </div>
     </md-toolbar>
@@ -13,26 +13,26 @@
       <div class="md-dialog-content">
         <form>
 	        <md-input-container class="md-block">
-	            <label>Indirizzo</label>
+	            <label translate>user-home.new-job-dialog.address</label>
 	            <input ng-model="newJobDialogController.request.address" required>
 	        </md-input-container>
 	        <md-input-container class="md-block">
-	            <md-switch ng-model="newJobDialogController.request.urgent" aria-label="Urgent">
-	                Urgent
+	            <md-switch ng-model="newJobDialogController.request.urgent">
+	                <span translate>user-home.new-job-dialog.urgent</span>
 	            </md-switch>
 	        </md-input-container>
 	        <md-input-container class="md-block">
-	            <label>Guasto</label>
+	            <label translate>user-home.new-job-dialog.issue</label>
 	            <md-select ng-model="newJobDialogController.request.faultType" required md-on-open="newJobDialogController.loadFaultTypes()">
 	               <md-option ng-value="fault" ng-repeat="fault in newJobDialogController.faultTypes">{{fault}}</md-option>
 	            </md-select>
 	        </md-input-container>
 	        <md-input-container class="md-block">
-	            <label>Descrizione del guasto</label>
+	            <label translate>user-home.new-job-dialog.description-of-issue</label>
 	            <textarea ng-model="newJobDialogController.request.description" required></textarea>
 	        </md-input-container>
 	        <md-input-container class="md-block">
-                <label>Cosa richiede</label>
+                <label translate>user-home.new-job-dialog.require</label>
                 <md-select ng-model="newJobDialogController.request.requestType" required md-on-open="newJobDialogController.loadRequestTypes()">
                     <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{requestType}}</md-option>
                 </md-select>
@@ -43,10 +43,10 @@
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
-      <md-button class="md-primary" ng-click="newJobDialogController.create(newJobDialogController.request)" ng-disabled="newJobDialogController.uploading">Crea richiesta</md-button>
+      <md-button class="md-primary" ng-click="newJobDialogController.create(newJobDialogController.request)" ng-disabled="newJobDialogController.uploading"><span translate>user-home.new-job-dialog.create-request</span></md-button>
       <span flex></span>
       <md-button ng-click="newJobDialogController.cancel()">
-        Cancel
+        <span translate>user-home.new-job-dialog.cancel</span>
       </md-button>
     </md-dialog-actions>
   </form>

@@ -1,14 +1,14 @@
 <md-content>
 
-    <h2 class="md-padding">Le mie richieste</h2>
-    <div class="md-padding" ng-if="$ctrl.requests.length == 0">Nessuna richiesta!</div>
+    <h2 class="md-padding" translate>user-home.my-requests</h2>
+    <div class="md-padding" ng-if="$ctrl.requests.length == 0" translate>user-home.no-requests</div>
     <md-list>
         <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
         <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
              <div class="md-list-item-text" layout="column">
                 <h3>{{request.failureType}} - {{request.address}}</h3>
-                <h4>{{request.requestType}}: Ci sono attualmente <br-bid-count request="request"></br-bid-count> offerta/e</h4>
+                <h4>{{request.requestType}}: <span translate>user-home.there-are</span> <br-bid-count request="request"></br-bid-count> <span translate>user-home.bids</span></h4>
                 <p>{{request.description}}</p>
             </div>
             <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
@@ -16,15 +16,15 @@
         </md-list-item>
     </md-list>
     
-    <h2 class="md-padding">Le mie richieste in elaborazione</h2>
-    <div class="md-padding" ng-if="$ctrl.requestsAccepted.length == 0">Nessuna richiesta in elaborazione!</div>
+    <h2 class="md-padding" translate>user-home.my-requests-in-progress</h2>
+    <div class="md-padding" ng-if="$ctrl.requestsAccepted.length == 0" translate>user-home.no-requests</div>
     <md-list>
         <md-divider ng-if="$ctrl.requestsAccepted.length > 0"></md-divider>
         <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requestsAccepted" ng-click="$ctrl.openRequest(request)">
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
              <div class="md-list-item-text" layout="column">
                 <h3>{{request.failureType}} - {{request.address}}</h3>
-                <h4>{{request.requestType}}: il <br-intervention-date request="request"></br-intervention-date></h4>
+                <h4>{{request.requestType}}: <span translate>user-home.the</span> <br-intervention-date request="request"></br-intervention-date></h4>
                 <p>{{request.description}}</p>
             </div>
             <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
@@ -32,8 +32,8 @@
         </md-list-item>
     </md-list>
     
-    <h2 class="md-padding">Le mie richieste completate</h2>
-    <div class="md-padding" ng-if="$ctrl.requestsCompleted.length == 0">Nessuna richiesta!</div>
+    <h2 class="md-padding" translate>user-home.my-completed-requests</h2>
+    <div class="md-padding" ng-if="$ctrl.requestsCompleted.length == 0" translate>user-home.no-requests</div>
     <md-list>
         <md-divider ng-if="$ctrl.requestsCompleted.length > 0"></md-divider>
         <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requestsCompleted" ng-click="$ctrl.openRequest(request)">
