@@ -4,7 +4,7 @@
              <md-icon class="md-avatar-icon" md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          </md-card-avatar>
          <md-card-header-text>
-             <span class="md-title">{{$ctrl.request.failureType}} - {{$ctrl.request.requestType}}</span>
+             <span class="md-title">{{('enum.FailureType.'+$ctrl.request.failureType)|translate}} - {{('enum.RequestType.' + $ctrl.request.requestType) | translate}}</span>
              <span class="md-subhead">{{$ctrl.request.address}}</span>
          </md-card-header-text>
          <md-icon ng-if="$ctrl.request.urgent" md-svg-src="icons/ic_warning_black_48px.svg" aria-label="urgent"></md-icon>

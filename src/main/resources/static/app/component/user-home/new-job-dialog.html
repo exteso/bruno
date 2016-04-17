@@ -24,7 +24,7 @@
 	        <md-input-container class="md-block">
 	            <label translate>user-home.new-job-dialog.issue</label>
 	            <md-select ng-model="newJobDialogController.request.faultType" required md-on-open="newJobDialogController.loadFaultTypes()">
-	               <md-option ng-value="fault" ng-repeat="fault in newJobDialogController.faultTypes">{{fault}}</md-option>
+	               <md-option ng-value="fault" ng-repeat="fault in newJobDialogController.faultTypes">{{('enum.FailureType.'+fault) | translate}}</md-option>
 	            </md-select>
 	        </md-input-container>
 	        <md-input-container class="md-block">
@@ -34,7 +34,7 @@
 	        <md-input-container class="md-block">
                 <label translate>user-home.new-job-dialog.require</label>
                 <md-select ng-model="newJobDialogController.request.requestType" required md-on-open="newJobDialogController.loadRequestTypes()">
-                    <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{requestType}}</md-option>
+                    <md-option ng-value="requestType" ng-repeat="requestType in newJobDialogController.requestTypes">{{('enum.RequestType.'+requestType)|translate}}</md-option>
                 </md-select>
             </md-input-container>
             

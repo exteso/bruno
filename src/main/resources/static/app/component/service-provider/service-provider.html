@@ -6,8 +6,8 @@
     <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
         <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          <div class="md-list-item-text" layout="column">
-            <h3>{{request.failureType}} - {{request.address}}</h3>
-            <h4>{{request.requestType}}</h4>
+            <h3>{{('enum.FailureType.'+request.failureType)|translate}} - {{request.address}}</h3>
+            <h4>{{('enum.RequestType.'+request.requestType)|translate}}</h4>
             <p>{{request.description}}</p>
         </div>
         <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
@@ -25,8 +25,8 @@
     <md-list-item class="md-3-line" ng-repeat="request in $ctrl.acceptedRequests" ng-click="$ctrl.openRequest(request)">
         <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          <div class="md-list-item-text" layout="column">
-            <h3>{{request.failureType}} - {{request.address}}</h3>
-            <h4>{{request.requestType}}</h4>
+            <h3>{{('enum.FailureType.'+request.failureType)|translate}} - {{request.address}}</h3>
+            <h4>{{('enum.RequestType.'+request.requestType)|translate}}</h4>
             <p>{{request.description}}</p>
         </div>
         <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
@@ -43,8 +43,8 @@
     <md-list-item class="md-3-line" ng-repeat="request in $ctrl.completedRequests" ng-click="$ctrl.openRequest(request)">
         <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
          <div class="md-list-item-text" layout="column">
-            <h3>{{request.failureType}} - {{request.address}}</h3>
-            <h4>{{request.requestType}}</h4>
+            <h3>{{('enum.FailureType.'+request.failureType)|translate}} - {{request.address}}</h3>
+            <h4>{{('enum.RequestType.'+request.requestType)|translate}}</h4>
             <p>{{request.description}}</p>
         </div>
         <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
