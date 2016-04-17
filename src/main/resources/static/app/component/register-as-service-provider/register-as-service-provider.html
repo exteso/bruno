@@ -1,7 +1,40 @@
 <md-content>
     <h2 class="md-padding" translate>register-as-service-provider.title</h2>
     <div class="md-padding" ng-if="$ctrl.user.userRequestType == null">
-        <form ng-submit="$ctrl.confirm()">
+        <form ng-submit="$ctrl.confirm()" style="max-width:640px">
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.company-name</label>
+                <input ng-model="$ctrl.request.companyName" required>
+            </md-input-container>
+            <div>
+                <p>
+                    <label translate>register-as-service-provider.field-of-work</label>
+                </p>
+                <div ng-repeat="type in $ctrl.fieldOfWorks">
+                    <md-checkbox ng-model="$ctrl.request.fieldOfWorks[type]"> <span>{{('enum.CompanyType.'+type) | translate}}</span>
+                </div>
+            </div>
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.address</label>
+                <input ng-model="$ctrl.request.address" required>
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.phone-number</label>
+                <input ng-model="$ctrl.request.phoneNumber" type="tel">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.email-contact</label>
+                <input ng-model="$ctrl.request.contactEmail" type="email">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.vat-number</label>
+                <input ng-model="$ctrl.request.vatNumber">
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label translate>register-as-service-provider.note</label>
+                <textarea ng-model="$ctrl.request.notes"></textarea>
+            </md-input-container>
+            
             <md-button class="md-primary md-raised" type="submit"><span translate>register-as-service-provider.confirm-request</span></md-button>
         </form>
     </div>

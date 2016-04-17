@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.exteso.bruno.model.CompanyType;
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
 import com.exteso.bruno.model.JobRequestBid;
@@ -84,6 +85,11 @@ public class JobRequestController {
     @RequestMapping("/api/job-request/request-type")
     public List<String> requestType() {
         return Arrays.asList(RequestType.REPAIR).stream().map(Enum::name).collect(Collectors.toList());
+    }
+    
+    @RequestMapping("/api/job-request/company-type")
+    public List<String> companyType() {
+        return Arrays.asList(CompanyType.values()).stream().map(Enum::name).collect(Collectors.toList());
     }
     
     @RequestMapping(value = "/api/job-request/{id}/bid-list", method = RequestMethod.GET)

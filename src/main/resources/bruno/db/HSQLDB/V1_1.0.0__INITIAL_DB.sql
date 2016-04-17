@@ -7,7 +7,14 @@ create table b_user(
     email_address varchar(255),
     user_type varchar(64), -- enum: CUSTOMER/SERVICE_PROVIDER/ADMIN
     user_request_type varchar(64) default null,
-    user_request_type_date timestamp default null
+    user_request_type_date timestamp default null,
+    company_name varchar(256),
+    company_field_of_work integer,
+    company_address varchar(512),
+    company_phone_number varchar(64),
+    company_email varchar(512),
+    company_vat_id varchar(128),
+    company_notes varchar(1024)
 );
 alter table b_user add constraint "unique_b_user" unique(provider, username);
 

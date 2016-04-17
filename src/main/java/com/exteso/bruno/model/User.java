@@ -19,6 +19,15 @@ public class User {
     private final UserType userType;
     private final UserType userRequestType;
     private final Date userRequestTypeDate;
+    //
+    private final String companyName;
+    private final Integer fieldOfWork;
+    private final String companyAddress;
+    private final String companyPhoneNumber;
+    private final String companyEmail;
+    private final String vatIdentifier;
+    private final String notes;
+    //
     
     
     public User(@Column("id") long id, 
@@ -29,7 +38,14 @@ public class User {
             @Column("email_address") String email,
             @Column("user_type") UserType userType,
             @Column("user_request_type") UserType userRequestType,
-            @Column("user_request_type_date") Date userRequestTypeDate) {
+            @Column("user_request_type_date") Date userRequestTypeDate,
+            @Column("company_name") String companyName,
+            @Column("company_field_of_work") Integer fieldOfWork,
+            @Column("company_address") String companyAddress,
+            @Column("company_phone_number") String companyPhoneNumber,
+            @Column("company_email") String companyEmail,
+            @Column("company_vat_id") String vatIdentifier,
+            @Column("company_notes") String notes) {
         this.id = id;
         this.provider = provider;
         this.username = username;
@@ -39,6 +55,16 @@ public class User {
         this.userType = userType;
         this.userRequestType = userRequestType;
         this.userRequestTypeDate = userRequestTypeDate;
+        
+        //
+        this.companyName = companyName;
+        this.fieldOfWork = fieldOfWork;
+        this.companyAddress = companyAddress;
+        this.companyPhoneNumber = companyPhoneNumber;
+        this.companyEmail = companyEmail;
+        this.vatIdentifier = vatIdentifier;
+        this.notes = notes;
+        //
     }
 
 
@@ -83,5 +109,40 @@ public class User {
 
     public Date getUserRequestTypeDate() {
         return userRequestTypeDate;
+    }
+
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+
+    public Integer getFieldOfWork() {
+        return fieldOfWork;
+    }
+
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+
+    public String getCompanyPhoneNumber() {
+        return companyPhoneNumber;
+    }
+
+
+    public String getCompanyEmail() {
+        return companyEmail;
+    }
+
+
+    public String getVatIdentifier() {
+        return vatIdentifier;
+    }
+
+
+    public String getNotes() {
+        return notes;
     }
 }

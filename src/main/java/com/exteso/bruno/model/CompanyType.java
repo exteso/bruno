@@ -1,5 +1,6 @@
 package com.exteso.bruno.model;
 
+
 public enum CompanyType {
 
     // https://github.com/exteso/bruno/issues/3
@@ -7,5 +8,10 @@ public enum CompanyType {
     CARPENTER, // Falegname
     WATERPROOFING_COMPANY, // Ditta di Impermeabilizzazione
     PLUMBER, // Idraulico
-    ELECTRICIAN, // Elettricista
+    ELECTRICIAN; // Elettricista
+    
+    
+    public int position() {
+        return 1 << this.ordinal();
+    }
 }

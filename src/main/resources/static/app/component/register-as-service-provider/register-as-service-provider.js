@@ -2,11 +2,15 @@
 	
 	angular.module('bruno').component('brRegisterAsServiceProvider', {
 		templateUrl: 'app/component/register-as-service-provider/register-as-service-provider.html',
-		controller: function(User) {
+		controller: function(User, JobRequest) {
 			var ctrl = this;
 			
 			
 			ctrl.confirm = confirm;
+			
+			JobRequest.companyType().then(function(ct) {
+				ctrl.fieldOfWorks = ct;
+			});
 			
 			loadUser();
 			
@@ -17,7 +21,7 @@
 			}
 			
 			function confirm() {
-				User.confirmRequestAsServiceProvider().then(loadUser)
+				User.confirmRequestAsServiceProvider(ctrl.request).then(loadUser)
 			}
 		}
 	});

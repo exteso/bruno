@@ -10,6 +10,10 @@
 				return $http.get('api/job-request/request-type').then(function(data) {return data.data});
 			},
 			
+			companyType: function() {
+				return $http.get('api/job-request/company-type').then(function(data) {return data.data});
+			},
+			
 			create: function(request) {
 				return $http.post('api/job-request', request);
 			},

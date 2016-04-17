@@ -26,8 +26,8 @@
                 });
             },
             
-            confirmRequestAsServiceProvider: function() {
-            	return $http.post('api/user/request-as-service-provider');
+            confirmRequestAsServiceProvider: function(request) {
+            	return $http.post('api/user/request-as-service-provider', request);
             },
             
             acceptAsServiceProvider: function(user) {
