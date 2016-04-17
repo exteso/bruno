@@ -1,9 +1,9 @@
 (function() {
 	
-	var module = angular.module('bruno', ['ui.router', 'ngMaterial', "com.2fdevs.videogular", "ngSanitize", 'pascalprecht.translate']);
+	var module = angular.module('bruno', ['ui.router', 'ngMaterial', 'ngCookies', "com.2fdevs.videogular", "ngSanitize", 'pascalprecht.translate']);
 	
 	
-	module.config(function ($stateProvider, $urlRouterProvider, $translateProvider) {
+	module.config(function ($stateProvider, $urlRouterProvider, $translateProvider, $cookiesProvider) {
 		$stateProvider.state('home', {
 			url: '/',
 			template: '<br-home></br-home>'
@@ -45,11 +45,15 @@
 		
 		$urlRouterProvider.otherwise('/');
 		
-		
 		//
 		$translateProvider.useUrlLoader('/api/translations');
-		$translateProvider.preferredLanguage('it');
 		$translateProvider.fallbackLanguage('en');
+		
 	});
+	
+	module.run(function run($translate, $cookies){
+		var locale = $cookies.get('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
+		$translate.use(locale || 'en');		
+	})
 	
 })();

@@ -34,6 +34,16 @@
                     <span translate>toolbar.my-requests</span>
                 </md-button>
             </md-menu-item>
+            <md-menu-item ng-if="$ctrl.currentLang !== 'it'">
+                <md-button ng-click="$ctrl.changeLang('it')">
+                    <span translate>toolbar.italian</span>
+                </md-button>
+            </md-menu-item>
+            <md-menu-item ng-if="$ctrl.currentLang !== 'en'">
+                <md-button ng-click="$ctrl.changeLang('en')">
+                    <span translate>toolbar.english</span>
+                </md-button>
+            </md-menu-item>
             <md-menu-item>
               <md-button ng-click="$ctrl.logout()">
                 <span translate>toolbar.logout</span>
