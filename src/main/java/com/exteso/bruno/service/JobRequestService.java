@@ -2,7 +2,6 @@ package com.exteso.bruno.service;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -16,10 +15,11 @@ import org.springframework.util.Assert;
 import com.exteso.bruno.model.FailureType;
 import com.exteso.bruno.model.JobRequest;
 import com.exteso.bruno.model.JobRequestBid;
-import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.JobRequestBidModification;
+import com.exteso.bruno.model.JobRequestCreation;
 import com.exteso.bruno.model.RequestState;
 import com.exteso.bruno.model.UploadedFile;
+import com.exteso.bruno.model.User;
 import com.exteso.bruno.model.UserIdentifier;
 import com.exteso.bruno.repository.FileUploadRepository;
 import com.exteso.bruno.repository.JobRequestBidRepository;
@@ -60,11 +60,12 @@ public class JobRequestService {
     }
     
     private Set<FailureType> requestTypeHandled(UserIdentifier from) {
-        return EnumSet.allOf(FailureType.class); //FIXME
+        User user = userRepository.findBy(from);
+        return FailureType.handledBy(user.companyTypes());
     }
 
     public List<JobRequest> findOpenForServiceProvider(UserIdentifier from) {
-        Set<String> handled = requestTypeHandled(from).stream().map(Enum::name).collect(Collectors.toSet());//FIXME;
+        Set<String> handled = requestTypeHandled(from).stream().map(Enum::name).collect(Collectors.toSet());
         return jobRequestRepository.findAllWithTypeAndState(handled, RequestState.OPEN);
     }
     

@@ -1,6 +1,11 @@
 package com.exteso.bruno.model;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.springframework.util.Assert;
 
 import ch.digitalfondue.npjt.ConstructorAnnotationRowMapper.Column;
 
@@ -119,6 +124,12 @@ public class User {
 
     public Integer getFieldOfWork() {
         return fieldOfWork;
+    }
+    
+    public Set<CompanyType> companyTypes() {
+        Assert.notNull(fieldOfWork);
+        int f = fieldOfWork;
+        return Arrays.asList(CompanyType.values()).stream().filter(c -> (c.position() & f) != 0).collect(Collectors.toSet());
     }
 
 

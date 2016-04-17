@@ -3,7 +3,10 @@ package com.exteso.bruno.model;
 import static java.util.EnumSet.allOf;
 import static java.util.EnumSet.of;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 //https://github.com/exteso/bruno/issues/3 issues
 public enum FailureType {
@@ -54,5 +57,13 @@ public enum FailureType {
 
     public Set<CompanyType> getRelatedTo() {
         return relatedTo;
+    }
+    
+    public static Set<FailureType> handledBy(Set<CompanyType> companyType) {
+        // we keep only the FailureType that have at least one related
+        // CompanyType
+        return Arrays.asList(FailureType.values()).stream()//
+                    .filter(f -> !Collections.disjoint(f.getRelatedTo(), companyType))
+                    .collect(Collectors.toSet());//
     }
 }
