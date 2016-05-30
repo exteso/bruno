@@ -23,3 +23,15 @@ br-job-request-card .job-request-card-media img, br-job-request-card .job-reques
     max-height: 450px;
     width: initial;
 }
+
+
+md-chips.br-chip-counter md-chips-wrap.md-chips {
+	border:0;
+	box-shadow:none;
+}
+
+md-chips.br-chip-counter .md-chip {
+	background-color: #C62828;
+	color:white;
+	font-weight: bold;
+}

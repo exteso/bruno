@@ -6,15 +6,23 @@
         <md-divider ng-if="$ctrl.requests.length > 0"></md-divider>
         <md-list-item class="md-3-line" ng-repeat="request in $ctrl.requests" ng-click="$ctrl.openRequest(request)">
             <md-icon md-svg-icon="icons/ic_build_black_48px.svg"></md-icon>
-             <div class="md-list-item-text" layout="column">
-                <h3>{{('enum.FailureType.'+request.failureType)|translate}} - {{request.address}}</h3>
-                <h4>{{('enum.RequestType.'+request.requestType)|translate}}: <span translate>user-home.there-are</span> <br-bid-count request="request"></br-bid-count> <span translate>user-home.bids</span></h4>
-                <p>{{request.description}}</p>
+             <div class="md-list-item-text" layout="row">
+             	<div layout="column" flex>
+	                <h3>{{('enum.FailureType.'+request.failureType)|translate}} - {{request.address}}</h3>
+	                <h4>{{('enum.RequestType.'+request.requestType)|translate}}</h4>
+	                <p>{{request.description}}</p>
+                </div>
+                <div layout="column" layout-align="center center">
+                	<md-chips class="br-chip-counter">
+      					<md-chip><br-bid-count request="request"></br-bid-count></md-chip>
+					</md-chips>
+                </div>
             </div>
-            <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon>
+            <!-- <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon> -->
             <md-divider></md-divider>
         </md-list-item>
     </md-list>
+    
     
     <h2 class="md-padding" translate>user-home.my-requests-in-progress</h2>
     <div class="md-padding" ng-if="$ctrl.requestsAccepted.length == 0" translate>user-home.no-requests</div>

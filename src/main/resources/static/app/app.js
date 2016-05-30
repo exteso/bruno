@@ -3,7 +3,7 @@
 	var module = angular.module('bruno', ['ui.router', 'ngMaterial', 'ngCookies', "com.2fdevs.videogular", "ngSanitize", 'pascalprecht.translate']);
 	
 	
-	module.config(function ($stateProvider, $urlRouterProvider, $translateProvider, $cookiesProvider) {
+	module.config(function ($stateProvider, $urlRouterProvider, $translateProvider, $cookiesProvider, $mdThemingProvider) {
 		$stateProvider.state('home', {
 			url: '/',
 			template: '<br-home></br-home>'
@@ -50,6 +50,9 @@
 		//$translateProvider.fallbackLanguage('en');
 		$translateProvider.useSanitizeValueStrategy('escape');
 		
+		$mdThemingProvider.theme('default')
+			.primaryPalette('blue-grey')
+			.accentPalette('teal');
 	});
 	
 	module.run(function run($translate, User){
