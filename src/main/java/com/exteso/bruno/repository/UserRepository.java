@@ -3,6 +3,7 @@ package com.exteso.bruno.repository;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.util.Assert;
 
@@ -32,6 +33,9 @@ public interface UserRepository {
 
     @Query("select * from b_user where provider = :provider and username = :username")
     User findBy(@Bind("provider") String provider, @Bind("username") String username);
+    
+    @Query("select user_locale from b_user where provider = :provider and username = :username")
+    String getLocale(@Bind("provider") String provider, @Bind("username") String username);
 
     @Query("update b_user set user_request_type = :userType, user_request_type_date = :date, "//
             + " company_name = :company_name, "//
@@ -50,6 +54,9 @@ public interface UserRepository {
             @Bind("company_email") String contactEmail,//
             @Bind("company_vat_id") String vatNumber,//
             @Bind("company_notes") String notes);
+    
+    @Query("update b_user set user_locale = :locale where provider = :provider and username = :username")
+    int setLocale(@Bind("provider") String provider, @Bind("username") String username, @Bind("locale") String languageTag);
 
     @Query("select * from b_user order by first_name DESC, last_name DESC, username DESC, provider DESC")
     List<User> findAll();
@@ -57,20 +64,28 @@ public interface UserRepository {
     @Query("update b_user set user_type = 'SERVICE_PROVIDER' where id = :userId")
     int confirmUserAsServiceProvider(@Bind("userId") long userId);
 
-    public default long getId(UserIdentifier ui) {
+    default long getId(UserIdentifier ui) {
         return getId(ui.getProvider(), ui.getUsername());
     }
 
-    public default User findBy(UserIdentifier ui) {
+    default User findBy(UserIdentifier ui) {
         return findBy(ui.getProvider(), ui.getUsername());
     }
 
-    public default User findBy(Principal principal) {
+    default User findBy(Principal principal) {
         return findBy(UserIdentifier.from(principal));
     }
 
-    public default void ensureUserIsAdmin(Principal principal) {
+    default void ensureUserIsAdmin(Principal principal) {
         Assert.isTrue(findBy(principal).getUserType() == UserType.ADMIN, "user is not admin");
     }
+
+	default Locale getUserLocale(UserIdentifier from) {
+		return Locale.forLanguageTag(getLocale(from.getProvider(), from.getUsername()));
+	}
+
+	default void setUserLocale(UserIdentifier from, Locale locale) {
+		setLocale(from.getProvider(), from.getUsername(), locale.toLanguageTag());
+	}
 
 }

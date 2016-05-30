@@ -25,6 +25,12 @@ public class UserIdentifier {
         String username = pu[1];
         return new UserIdentifier(provider, username);
     }
+    
+    public static boolean isAuthenticated(Principal principal) {
+    	return principal != null && 
+    			principal.getName() != null && 
+    			StringUtils.split(principal.getName(), ":", 2).length == 2;
+    }
 
     public String getProvider() {
         return provider;

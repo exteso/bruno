@@ -1,0 +1,1 @@
+alter table b_user add user_locale varchar(12) default 'EN' not null;

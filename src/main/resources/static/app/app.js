@@ -47,14 +47,17 @@
 		
 		//
 		$translateProvider.useUrlLoader('/api/translations');
-		$translateProvider.fallbackLanguage('en');
+		//$translateProvider.fallbackLanguage('en');
 		$translateProvider.useSanitizeValueStrategy('escape');
 		
 	});
 	
-	module.run(function run($translate, $cookies){
-		var locale = $cookies.get('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
-		$translate.use(locale || 'en');		
+	module.run(function run($translate, User){
+		User.current().then(function(user) {
+			$translate.use(user.locale);
+		}, function() {
+			$translate.use('en');
+		});
 	})
 	
 })();

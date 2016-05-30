@@ -7,10 +7,9 @@
 			
 			ctrl.$state = $state;
 			
-			ctrl.currentLang = $cookies.get('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
-			
-			User.currentCachedUser().then(function(user) {
+			User.current().then(function(user) {
 				ctrl.user = user;
+				ctrl.currentLang = user.locale;
 				
 				if(user.firstname || user.lastname) {
 					ctrl.username = user.firstname + (user.firstname && user.lastname ? ' ' : '') + (user.lastname ? user.lastname : '');
@@ -27,8 +26,8 @@
 			
 			ctrl.changeLang = function(lang) {
 				$http.get('/api/translations?lang='+lang).then(function() {
+					ctrl.currentLang = lang;
 					$translate.use(lang);
-					ctrl.currentLang = $cookies.get('org.springframework.web.servlet.i18n.CookieLocaleResolver.LOCALE');
 				});
 			}
 		}
