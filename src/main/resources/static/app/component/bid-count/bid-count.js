@@ -1,7 +1,7 @@
 (function() {
 	
 	angular.module('bruno').component('brBidCount', {
-		template: "{{$ctrl.bidsCount}}",
+		template: '<md-chips ng-if="$ctrl.bidsCount > 0" class="br-chip-counter"><md-chip>{{$ctrl.bidsCount}}</md-chip></md-chips>',
 		bindings: {
 			request: '='
 		},

@@ -12,11 +12,7 @@
 	                <h4>{{('enum.RequestType.'+request.requestType)|translate}}</h4>
 	                <p>{{request.description}}</p>
                 </div>
-                <div layout="column" layout-align="center center">
-                	<md-chips class="br-chip-counter">
-      					<md-chip><br-bid-count request="request"></br-bid-count></md-chip>
-					</md-chips>
-                </div>
+                <div layout="column" layout-align="center center"><br-bid-count request="request"></br-bid-count></div>
             </div>
             <!-- <md-icon ng-if="request.urgent" class="md-secondary" md-svg-src="icons/ic_warning_black_48px.svg"></md-icon> -->
             <md-divider></md-divider>
