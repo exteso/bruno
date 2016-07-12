@@ -19,13 +19,13 @@ OAuth conf:
 As an environment variable, add (on *nix):
 
 ```
-BRUNO_OAUTH_GITHUB="{\"clientId\" : \"....\", \"clientSecret\" : \"...\"}"
+BRUNO_OAUTH_GITHUB="{\"clientId\" : \"a1c\", \"clientSecret\" : \"75f\"}"
 export BRUNO_OAUTH_GITHUB
 
-BRUNO_OAUTH_GOOGLE="{\"clientId\" : \"....\", \"clientSecret\" : \"...\"}"
+BRUNO_OAUTH_GOOGLE="{\"clientId\" : \"195\", \"clientSecret\" : \"LW0\"}"
 export BRUNO_OAUTH_GOOGLE
 
-BRUNO_OAUTH_FACEBOOK="{\"clientId\" : \"....\", \"clientSecret\" : \"...\"}"
+BRUNO_OAUTH_FACEBOOK="{\"clientId\":\"636\", \"clientSecret\" : \"413\"}"
 export BRUNO_OAUTH_FACEBOOK
 ```
 
@@ -36,6 +36,10 @@ set BRUNO_OAUTH_GITHUB={"clientId":"...", "clientSecret" : "..."}
 set BRUNO_OAUTH_GOOGLE={"clientId":"...", "clientSecret" : "..."}
 set BRUNO_OAUTH_FACEBOOK={"clientId":"...", "clientSecret" : "..."}
 ``
+
+you can also set the same variables (using windows syntax) in IntelliJ to have them used when launching maven projects:
+> IntelliJ IDEA > Preferences > Build, Execution, Environments > Build Tools > Maven > Runner 
+... and add them to the Environment Variables list
 
 Admin users:
 ------------
