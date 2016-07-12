@@ -2,8 +2,15 @@
     <div class="md-toolbar-tools">
         <h2 ng-click="$ctrl.$state.go('user-home')"><img ng-src="/img/logo.svg" style="height: 36px;" class="md-avatar"/> <span translate>toolbar.bruno</span></h2>
         <span flex></span>
+        <md-button class="md-icon-button" aria-label="refresh">
+            <md-tooltip md-direction="left" ng-if="$ctrl.user.userType" >
+                <span ng-bind="$ctrl.user.userType"></span>
+            </md-tooltip>
+            <md-icon ng-if="$ctrl.user.userType === 'ADMIN'" md-svg-icon="/icons/ic_build_black_48px.svg"></md-icon>
+            <md-icon ng-if="$ctrl.user.userType === 'SERVICE_PROVIDER'" md-svg-icon="/icons/ic_store_black_48px.svg"></md-icon>
+        </md-button>
         <span ng-if="$ctrl.user" ng-bind="$ctrl.username"></span>
-        
+
         <md-menu ng-if="$ctrl.user">
           <md-button aria-label="Open menu" class="md-icon-button" ng-click="$mdOpenMenu($event)">
             <md-icon md-svg-icon="/icons/ic_more_vert_white_48px.svg"></md-icon>
