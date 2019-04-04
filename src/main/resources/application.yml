@@ -12,10 +12,10 @@ google:
     clientAuthenticationScheme: form
     scope: ['openid', 'email']
   resource:
-    userInfoUri: https://www.googleapis.com/plus/v1/people/me/openIdConnect
+    userInfoUri: https://www.googleapis.com/userinfo/v2/me
 facebook:
   client:
-    accessTokenUri: https://graph.facebook.com/v2.3/oauth/access_token
+    accessTokenUri: https://graph.facebook.com/v3.2/oauth/access_token
     userAuthorizationUri: https://www.facebook.com/dialog/oauth
     tokenName: oauth_token
     authenticationScheme: query
@@ -28,5 +28,6 @@ spring:
     chain:
       enabled: true
 server.session.timeout: 3600
+server.port: 8000
 multipart.maxFileSize: 25Mb
 multipart.maxRequestSize: 25Mb

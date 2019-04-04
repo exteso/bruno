@@ -16,6 +16,15 @@ On change, the server will restart automatically using https://docs.spring.io/sp
 OAuth conf:
 -----------
 
+Define clientId and clientSecret for:
+ - Google: https://console.developers.google.com/apis/credentials
+    redirect uri: http://bruno.scapp.io/login/google
+ - github: https://github.com/settings/developers
+    redirect uri: http://bruno.scapp.io/login/github
+ - Facebook: https://developers.facebook.com/apps/
+    redirect uri: http://bruno.scapp.io/login/facebook
+
+
 As an environment variable, add (on *nix):
 
 ```
@@ -73,3 +82,8 @@ If not logged:
 
 > mvn clean install
 > cf push bruno -p target/bruno-1.0-SNAPSHOT.jar
+
+//Some exampes about how to connect to AWS S3 service
+https://github.com/cloudfoundry-samples/cf-s3-demo
+
+
